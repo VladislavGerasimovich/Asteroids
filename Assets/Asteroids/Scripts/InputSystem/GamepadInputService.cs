@@ -15,5 +15,8 @@ namespace Asteroids.Scripts.PlayerShip
                 return _tempAxis;
             }
         }
+
+        public override bool IsFirstGunSlotButtonDown() => Input.GetButtonDown(JoystickA);
+        public override bool IsSecondGunSlotButtonDown() => Input.GetButtonDown(JoystickB);
     }
 }

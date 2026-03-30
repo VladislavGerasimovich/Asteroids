@@ -1,3 +1,4 @@
+using Asteroids.Scripts.Bullets;
 using Asteroids.Scripts.PlayerShip;
 using UnityEngine;
 using Zenject;
@@ -8,14 +9,17 @@ namespace Asteroids.Scripts.Infrastructure
     {
         [SerializeField] private Camera mainCamera;
         [SerializeField] private PlayerShipView playerShipView;
-        [SerializeField] private MobileJoystick mobileJoystick;
+        [SerializeField] private MobileInputView mobileInputView;
+        [SerializeField] private BulletsViewFactory bulletsViewFactory;
 
         public override void InstallBindings()
         {
             Container.BindInterfacesTo<ShipInputRouter>().AsSingle();
             Container.Bind<ShipMovement>().AsSingle();
+            Container.BindInterfacesAndSelfTo<ShipWeaponsHandler>().AsSingle();
             Container.Bind<PlayerShipView>().FromInstance(playerShipView).AsSingle();
-            Container.Bind<MobileJoystick>().FromInstance(mobileJoystick).AsSingle();
+            Container.Bind<MobileInputView>().FromInstance(mobileInputView).AsSingle();
+            Container.BindInterfacesAndSelfTo<BulletsViewFactory>().FromInstance(bulletsViewFactory).AsSingle();
         }
     }
 }
