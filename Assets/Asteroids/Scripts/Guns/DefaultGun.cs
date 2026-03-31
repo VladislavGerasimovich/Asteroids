@@ -5,7 +5,7 @@ namespace Asteroids.Scripts.Guns
 {
     public class DefaultGun : IGun
     {
-        public event Action<IBullet> OnShoot;
+        public event Action<Bullet> OnShoot;
         
         public bool CanShoot() => true;
 

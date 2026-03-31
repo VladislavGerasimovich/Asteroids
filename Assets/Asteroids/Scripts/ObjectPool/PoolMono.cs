@@ -46,6 +46,17 @@ public class PoolMono<T> where T : MonoBehaviour
         }
     }
 
+    public void ResetElement(T element)
+    {
+        foreach (var item in this.pool)
+        {
+            if (item == element)
+            {
+                item.gameObject.SetActive(false);
+            }
+        }
+    }
+
     private void CreatePool(int count)
     {
         this.pool = new List<T>();

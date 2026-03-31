@@ -21,7 +21,7 @@ namespace Asteroids.Scripts.Bullets
             _laserGunBulletPool = new PoolMono<BulletView>(laserGunBulletSprite, 50, laserGunBulletContainer.transform);
         }
 
-        public BulletView GetTemplate(IBullet bullet)
+        public BulletView GetTemplate(Bullet bullet)
         {
             if (bullet is DefaultBullet)
                 return _defaultBulletPool.GetFreeElement();
@@ -29,6 +29,14 @@ namespace Asteroids.Scripts.Bullets
                 return _laserGunBulletPool.GetFreeElement();
 
             return null;
+        }
+        
+        public void Reset(BulletEntity bulletEntity, BulletView bulletView)
+        {
+            if (bulletEntity.Entity is DefaultBullet)
+                _defaultBulletPool.ResetElement(bulletView);
+            if (bulletEntity.Entity is LaserGunBullet)
+                _laserGunBulletPool.ResetElement(bulletView);
         }
     }
 }

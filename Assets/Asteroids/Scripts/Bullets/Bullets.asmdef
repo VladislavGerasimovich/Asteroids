@@ -2,7 +2,8 @@
     "name": "Bullets",
     "rootNamespace": "",
     "references": [
-        "ObjectPool"
+        "ObjectPool",
+        "Timers"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

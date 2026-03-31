@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Asteroids.Scripts.Timers
 {
-    class Timers<T>
+    public class Timers<T>
     {
         private List<Timer> _timers = new List<Timer>();
 
@@ -20,7 +20,7 @@ namespace Asteroids.Scripts.Timers
 
         public void Tick(float deltaTime)
         {
-            foreach (var timer in _timers.ToList())
+            foreach (var timer in _timers)
             {
                 timer.AccumulatedTime += deltaTime;
             

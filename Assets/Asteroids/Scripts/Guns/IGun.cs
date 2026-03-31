@@ -5,7 +5,7 @@ namespace Asteroids.Scripts.Guns
 {
     public interface IGun
     {
-        event Action<IBullet> OnShoot;
+        event Action<Bullet> OnShoot;
         bool CanShoot();
         void Shoot();
     }
