@@ -363,6 +363,7 @@ MonoBehaviour:
   playerShipView: {fileID: 850967026}
   mobileInputView: {fileID: 1255877482}
   bulletsViewFactory: {fileID: 2109479381}
+  enemiesViewFactory: {fileID: 1216472641}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1004,6 +1005,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1150875624}
   m_CullTransparentMesh: 1
+--- !u!1 &1216472640
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1216472642}
+  - component: {fileID: 1216472641}
+  m_Layer: 0
+  m_Name: EnemiesViewFactory
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1216472641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1216472640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c98e3c1d505a4d0e89346afab585df93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NloView: {fileID: 1244955658873928193, guid: 3fd7fee56b0a04e419ef05adbb758f19, type: 3}
+  AsteroidView: {fileID: 3937626792344662897, guid: e5ee1cbade614084e8967c782a0b28fd, type: 3}
+--- !u!4 &1216472642
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1216472640}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.234216, y: 1.25573, z: -9.034493}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1255877477
 GameObject:
   m_ObjectHideFlags: 0
@@ -1245,8 +1292,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 000421ecbc1640cd9f6bdacb4564731c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultBulletSprite: {fileID: 3491696985203574308, guid: 8398076a4f6beaf448e3bd7b1481213c, type: 3}
-  laserGunBulletSprite: {fileID: 4752240769300689469, guid: b7a2ad63f80d23148875f23c18f8a5cd, type: 3}
+  defaultBulletView: {fileID: 3491696985203574308, guid: 8398076a4f6beaf448e3bd7b1481213c, type: 3}
+  laserGunBulletView: {fileID: 4752240769300689469, guid: b7a2ad63f80d23148875f23c18f8a5cd, type: 3}
 --- !u!4 &2109479382
 Transform:
   m_ObjectHideFlags: 0
@@ -1273,3 +1320,4 @@ SceneRoots:
   - {fileID: 1255877481}
   - {fileID: 14244440}
   - {fileID: 2109479382}
+  - {fileID: 1216472642}
