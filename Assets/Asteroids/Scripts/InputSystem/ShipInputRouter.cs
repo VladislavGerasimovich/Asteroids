@@ -9,11 +9,13 @@ namespace Asteroids.Scripts.PlayerShip
         private PlayerShipView _currentShipView;
         private InertMovement _inertMovement;
         private IInputService _inputService;
+        private ShipWeaponsHandler _shipWeaponsHandler;
 
-        public ShipInputRouter(PlayerShipView shipView, ShipMovement shipMovement, MobileJoystick mobileJoystick)
+        public ShipInputRouter(PlayerShipView shipView, ShipMovement shipMovement, ShipWeaponsHandler shipWeaponsHandler, MobileInputView mobileInputView)
         {
             _currentShipView = shipView;
             _shipMovement = shipMovement;
+            _shipWeaponsHandler = shipWeaponsHandler;
             _inertMovement = new InertMovement();
             
             if (Application.isEditor)
@@ -35,12 +37,12 @@ namespace Asteroids.Scripts.PlayerShip
                     _inputService = new StandaloneInputService();
                 }
                 
-                mobileJoystick.Hide();
+                mobileInputView.Hide();
             }
             else
             {
-                _inputService = new MobileJoystickInputService(mobileJoystick);
-                mobileJoystick.Show();
+                _inputService = new MobileJoystickInputService(mobileInputView);
+                mobileInputView.Show();
             }
         }
         
@@ -58,6 +60,15 @@ namespace Asteroids.Scripts.PlayerShip
             if (_inputService.TempAxis.x != 0)
             {
                 _shipMovement.Rotate(_inputService.TempAxis.x);
+            }
+
+            if (_inputService.IsFirstGunSlotButtonDown())
+            {
+                _shipWeaponsHandler.OnFirstSlotGunButtonClicked();
+            }
+            else if (_inputService.IsSecondGunSlotButtonDown())
+            {
+                _shipWeaponsHandler.OnSecondSlotGunButtonClicked();
             }
             
             _shipMovement.MoveLooped(_inertMovement.Acceleration);

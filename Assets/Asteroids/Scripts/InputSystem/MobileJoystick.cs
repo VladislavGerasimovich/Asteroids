@@ -6,7 +6,6 @@ namespace Asteroids.Scripts.PlayerShip
 {
     public class MobileJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
     {
-        [SerializeField] private CanvasGroup joystickPanelCanvasGroup;
         [SerializeField] private float dragThreshold = 0.6f;
         [SerializeField] private int dragMovementDistance = 30;
         [SerializeField] private int dragOffsetDistance = 100;
@@ -18,23 +17,10 @@ namespace Asteroids.Scripts.PlayerShip
 
         public Vector2 Axis => _tempAxis;
 
+
         private void Awake()
         {
             joystickTransform = (RectTransform)transform;
-        }
-
-        public void Show()
-        {
-            joystickPanelCanvasGroup.alpha = 1f;
-            joystickPanelCanvasGroup.interactable = true;
-            joystickPanelCanvasGroup.blocksRaycasts = true;
-        }
-        
-        public void Hide()
-        {
-            joystickPanelCanvasGroup.alpha = 0f;
-            joystickPanelCanvasGroup.interactable = false;
-            joystickPanelCanvasGroup.blocksRaycasts = false;
         }
 
         public void OnPointerDown(PointerEventData eventData)

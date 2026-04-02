@@ -4,13 +4,15 @@ namespace Asteroids.Scripts.PlayerShip
 {
     public class MobileJoystickInputService : InputService
     {
-        private MobileJoystick _mobileJoystick;
+        private MobileInputView _mobileInputView;
         
-        public MobileJoystickInputService(MobileJoystick mobileJoystick)
+        public MobileJoystickInputService(MobileInputView mobileInputView)
         {
-            _mobileJoystick = mobileJoystick;
+            _mobileInputView = mobileInputView;
         }
 
-        public override Vector2 TempAxis => _mobileJoystick.Axis;
+        public override Vector2 TempAxis => _mobileInputView.MobileJoystick.Axis;
+        public override bool IsFirstGunSlotButtonDown() => _mobileInputView.FirstGunSlotButton.IsPressed;
+        public override bool IsSecondGunSlotButtonDown() => _mobileInputView.SecondGunSlotButton.IsPressed;
     }
 }

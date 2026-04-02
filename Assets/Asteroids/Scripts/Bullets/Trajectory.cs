@@ -1,0 +1,24 @@
+using System;
+using UnityEngine;
+
+namespace Asteroids.Scripts.Bullets
+{
+    public class Trajectory
+    {
+        public readonly float Speed;
+        public readonly Vector2 StartPosition;
+        public readonly Vector2 Direction;
+
+        private readonly Func<Trajectory, float> _currentTimeProvider;
+        
+        public Vector2 Position => StartPosition + (Direction * Speed * _currentTimeProvider.Invoke(this));
+
+        public Trajectory(float speed, Vector2 startPosition, Vector2 direction, Func<Trajectory, float> currentTimeProvider)
+        {
+            StartPosition = startPosition;
+            Direction = direction;
+            Speed = speed;
+            _currentTimeProvider = currentTimeProvider;
+        }
+    }
+}
