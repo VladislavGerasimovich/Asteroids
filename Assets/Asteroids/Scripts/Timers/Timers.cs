@@ -20,7 +20,7 @@ namespace Asteroids.Scripts.Timers
 
         public void Tick(float deltaTime)
         {
-            foreach (var timer in _timers)
+            foreach (var timer in _timers.ToList())
             {
                 timer.AccumulatedTime += deltaTime;
             

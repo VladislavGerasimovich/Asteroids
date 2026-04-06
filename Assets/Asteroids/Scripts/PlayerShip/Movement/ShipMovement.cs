@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Asteroids.Scripts.PlayerShip
 {
-    public class ShipMovement : Transformable
+    public class ShipMovement : TransformData
     {
         private readonly float _degreesPerSecond = 180;
         

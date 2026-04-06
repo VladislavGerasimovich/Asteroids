@@ -6,8 +6,8 @@ namespace Asteroids.Scripts.Bullets
 {
     public class BulletsViewFactory : MonoBehaviour, IInitializable
     {
-        [SerializeField] private BulletView defaultBulletSprite;
-        [SerializeField] private BulletView laserGunBulletSprite;
+        [SerializeField] private BulletView defaultBulletView;
+        [SerializeField] private BulletView laserGunBulletView;
         
         private PoolMono<BulletView> _defaultBulletPool;
         private PoolMono<BulletView> _laserGunBulletPool;
@@ -15,10 +15,10 @@ namespace Asteroids.Scripts.Bullets
         public void Initialize()
         {
             GameObject defaultBulletContainer = new GameObject("DefaultBulletContainer");
-            _defaultBulletPool = new PoolMono<BulletView>(defaultBulletSprite, 50, defaultBulletContainer.transform);
+            _defaultBulletPool = new PoolMono<BulletView>(defaultBulletView, 50, defaultBulletContainer.transform);
             
             GameObject laserGunBulletContainer = new GameObject("LaserGunBulletContainer");
-            _laserGunBulletPool = new PoolMono<BulletView>(laserGunBulletSprite, 50, laserGunBulletContainer.transform);
+            _laserGunBulletPool = new PoolMono<BulletView>(laserGunBulletView, 50, laserGunBulletContainer.transform);
         }
 
         public BulletView GetTemplate(Bullet bullet)
