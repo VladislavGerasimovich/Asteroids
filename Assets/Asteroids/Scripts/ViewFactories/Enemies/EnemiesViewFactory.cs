@@ -8,35 +8,46 @@ namespace Asteroids.Scripts.ViewFactories.Enemies
     {
         [SerializeField] private EnemyView NloView;
         [SerializeField] private EnemyView AsteroidView;
+        [SerializeField] private EnemyView PartOfAsteroidView;
         
-        private PoolMono<EnemyView> _NloPool;
-        private PoolMono<EnemyView> _AsteroidPool;
+        private PoolMono<EnemyView> _nloPool;
+        private PoolMono<EnemyView> _asteroidPool;
+        private PoolMono<EnemyView> _partOfAsteroidPool;
         
         public void Initialize()
         {
             GameObject nloContainer = new GameObject("NloContainer");
-            _NloPool = new PoolMono<EnemyView>(NloView, 50, nloContainer.transform);
-            _NloPool.autoExpand = true;
+            _nloPool = new PoolMono<EnemyView>(NloView, 50, nloContainer.transform);
+            _nloPool.autoExpand = true;
+            
             GameObject asteroidContainer = new GameObject("AsteroidContainer");
-            _AsteroidPool = new PoolMono<EnemyView>(AsteroidView, 50, asteroidContainer.transform);
+            _asteroidPool = new PoolMono<EnemyView>(AsteroidView, 50, asteroidContainer.transform);
+            
+            GameObject partOfAsteroidContainer = new GameObject("PartOfAsteroidContainer");
+            _partOfAsteroidPool = new PoolMono<EnemyView>(PartOfAsteroidView, 200, partOfAsteroidContainer.transform);
+            _partOfAsteroidPool.autoExpand = true;
         }
         
         public EnemyView GetTemplate(Enemy enemy)
         {
             if (enemy is Nlo)
-                return _NloPool.GetFreeElement();
+                return _nloPool.GetFreeElement();
             if (enemy is Asteroid)
-                return _AsteroidPool.GetFreeElement();
-
+                return _asteroidPool.GetFreeElement();
+            if (enemy is PartOfAsteroid)
+                return _partOfAsteroidPool.GetFreeElement();
+            
             return null;
         }
         
         public void Reset(EnemyView enemyView)
         {
             if (enemyView.Enemy is Nlo)
-                _NloPool.ResetElement(enemyView);
+                _nloPool.ResetElement(enemyView);
             if (enemyView.Enemy is Asteroid)
-                _AsteroidPool.ResetElement(enemyView);
+                _asteroidPool.ResetElement(enemyView);
+            if (enemyView.Enemy is PartOfAsteroid)
+                _partOfAsteroidPool.ResetElement(enemyView);
         }
     }
 }

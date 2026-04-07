@@ -1011,6 +1011,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NloView: {fileID: 1244955658873928193, guid: 3fd7fee56b0a04e419ef05adbb758f19, type: 3}
   AsteroidView: {fileID: 3937626792344662897, guid: e5ee1cbade614084e8967c782a0b28fd, type: 3}
+  PartOfAsteroidView: {fileID: 3284016594210848826, guid: 87b47892e2c16fa48a1047156d49fa9c, type: 3}
 --- !u!4 &1216472642
 Transform:
   m_ObjectHideFlags: 0
@@ -1195,7 +1196,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 195, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1715429582

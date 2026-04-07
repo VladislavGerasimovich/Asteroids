@@ -8,7 +8,8 @@ namespace Asteroids.Scripts.OwnPhysics
     public class CollisionsRecords
     {
         public event Action<Enemy> OnEnemyDied;
-        public event Action<DefaultBullet> DefaultBulletHitEnemy;
+        public event Action<DefaultBullet> OnDefaultBulletHitEnemy;
+        public event Action<Asteroid> OnAsteroidDestroyed;
         public event Action GameEnd;
         
         public IEnumerable<Record> Values()
@@ -20,21 +21,15 @@ namespace Asteroids.Scripts.OwnPhysics
 
             yield return IfCollided((DefaultBullet bullet, Enemy enemy) =>
             {
-                DefaultBulletHitEnemy?.Invoke(bullet);
+                OnDefaultBulletHitEnemy?.Invoke(bullet);
             });
             
-            /*
             yield return IfCollided((Bullet bullet, Asteroid asteroid) =>
             {
-                if (asteroid is PartOfAsteroid)
-                    return;
-
-                _enemies.Simulate(asteroid.CreatePart());
-                _enemies.Simulate(asteroid.CreatePart());
-                _enemies.Simulate(asteroid.CreatePart());
-                _enemies.Simulate(asteroid.CreatePart());
+                OnAsteroidDestroyed?.Invoke(asteroid);
             });
 
+            /*
             yield return IfCollided((Ship ship, Enemy enemy) =>
             {
                 GameEnd?.Invoke();

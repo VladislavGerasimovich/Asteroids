@@ -49,7 +49,7 @@ namespace Asteroids.Scripts.PlayerShip
             _secondSlotGun.OnShoot += OnGunShoot;
             _bulletsSimulation.Start += OnStartBulletSimulation;
             _bulletsSimulation.End += OnEndBulletSimulation;
-            _collisionsRecords.DefaultBulletHitEnemy += OnDefaultBulletDied;
+            _collisionsRecords.OnDefaultBulletHitEnemy += OnDefaultBulletDied;
         }
 
         public void Tick()
@@ -64,7 +64,7 @@ namespace Asteroids.Scripts.PlayerShip
             _secondSlotGun.OnShoot -= OnGunShoot;
             _bulletsSimulation.Start -= OnStartBulletSimulation;
             _bulletsSimulation.End -= OnEndBulletSimulation;
-            _collisionsRecords.DefaultBulletHitEnemy -= OnDefaultBulletDied;
+            _collisionsRecords.OnDefaultBulletHitEnemy -= OnDefaultBulletDied;
         }
         
         public void OnFirstSlotGunButtonClicked()
