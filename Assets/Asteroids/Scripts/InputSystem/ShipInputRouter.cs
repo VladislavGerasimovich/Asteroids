@@ -6,14 +6,14 @@ namespace Asteroids.Scripts.PlayerShip
     public class ShipInputRouter : ITickable
     {
         private ShipMovement _shipMovement;
-        private PlayerShipView _currentShipView;
+        private PlayerSpawner _playerSpawner;
         private InertMovement _inertMovement;
         private IInputService _inputService;
         private ShipWeaponsHandler _shipWeaponsHandler;
 
-        public ShipInputRouter(PlayerShipView shipView, ShipMovement shipMovement, ShipWeaponsHandler shipWeaponsHandler, MobileInputView mobileInputView)
+        public ShipInputRouter(PlayerSpawner playerSpawner, ShipMovement shipMovement, ShipWeaponsHandler shipWeaponsHandler, MobileInputView mobileInputView)
         {
-            _currentShipView = shipView;
+            _playerSpawner = playerSpawner;
             _shipMovement = shipMovement;
             _shipWeaponsHandler = shipWeaponsHandler;
             _inertMovement = new InertMovement();
@@ -72,7 +72,7 @@ namespace Asteroids.Scripts.PlayerShip
             }
             
             _shipMovement.MoveLooped(_inertMovement.Acceleration);
-            _currentShipView.Move(_shipMovement.Position, _shipMovement.Rotation);
+            _playerSpawner.CurrentPlayerShipView.Move(_shipMovement.Position, _shipMovement.Rotation);
         }
     }
 }

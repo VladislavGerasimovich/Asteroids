@@ -1,8 +1,8 @@
-using Asteroids.Scripts.Bullets.Views;
+using Asteroids.Scripts.Bullets;
 using UnityEngine;
 using Zenject;
 
-namespace Asteroids.Scripts.Bullets
+namespace Asteroids.Scripts.ViewFactories.Bullets
 {
     public class BulletsViewFactory : MonoBehaviour, IInitializable
     {

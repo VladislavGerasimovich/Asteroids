@@ -1,8 +1,8 @@
-using Asteroids.Scripts.Enemies.Views;
+using Asteroids.Scripts.Enemies;
 using UnityEngine;
 using Zenject;
 
-namespace Asteroids.Scripts.Enemies
+namespace Asteroids.Scripts.ViewFactories.Enemies
 {
     public class EnemiesViewFactory : MonoBehaviour, IInitializable
     {

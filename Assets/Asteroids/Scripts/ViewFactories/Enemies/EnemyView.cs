@@ -1,6 +1,7 @@
+using Asteroids.Scripts.Enemies;
 using UnityEngine;
 
-namespace Asteroids.Scripts.Enemies.Views
+namespace Asteroids.Scripts.ViewFactories.Enemies
 {
     public class EnemyView : MonoBehaviour
     {

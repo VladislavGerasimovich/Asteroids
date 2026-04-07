@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
 using Asteroids.Scripts.Bullets;
-using Asteroids.Scripts.Bullets.Views;
 using Asteroids.Scripts.Guns;
+using Asteroids.Scripts.OwnPhysics;
+using Asteroids.Scripts.ViewFactories.Bullets;
 using UnityEngine;
 using Zenject;
 
@@ -19,11 +20,19 @@ namespace Asteroids.Scripts.PlayerShip
         private ShipMovement _shipMovement;
         private readonly Dictionary<BulletEntity, BulletView> _views;
         private LaserGunRollback _laserGunRollback;
+        private PhysicsRouter _physicsRouter;
+        private CollisionsRecords _collisionsRecords;
 
-        public ShipWeaponsHandler(ShipMovement shipMovement, BulletsViewFactory bulletsViewFactory)
+        public ShipWeaponsHandler(
+            ShipMovement shipMovement,
+            BulletsViewFactory bulletsViewFactory,
+            PhysicsRouter physicsRouter,
+            CollisionsRecords collisionsRecords)
         {
             _bulletsViewFactory = bulletsViewFactory;
             _shipMovement = shipMovement;
+            _physicsRouter = physicsRouter;
+            _collisionsRecords = collisionsRecords;
             _views = new Dictionary<BulletEntity, BulletView>();
         }
         
@@ -40,6 +49,7 @@ namespace Asteroids.Scripts.PlayerShip
             _secondSlotGun.OnShoot += OnGunShoot;
             _bulletsSimulation.Start += OnStartBulletSimulation;
             _bulletsSimulation.End += OnEndBulletSimulation;
+            _collisionsRecords.DefaultBulletHitEnemy += OnDefaultBulletDied;
         }
 
         public void Tick()
@@ -54,6 +64,7 @@ namespace Asteroids.Scripts.PlayerShip
             _secondSlotGun.OnShoot -= OnGunShoot;
             _bulletsSimulation.Start -= OnStartBulletSimulation;
             _bulletsSimulation.End -= OnEndBulletSimulation;
+            _collisionsRecords.DefaultBulletHitEnemy -= OnDefaultBulletDied;
         }
         
         public void OnFirstSlotGunButtonClicked()
@@ -77,6 +88,10 @@ namespace Asteroids.Scripts.PlayerShip
         {
             BulletView bulletView = _bulletsViewFactory.GetTemplate(bulletEntity.Entity);
             bulletView.Init(bulletEntity.BulletTrajectory);
+            
+            PhysicsEventsBroadcaster physicsEventsBroadcaster = bulletView.GetComponent<PhysicsEventsBroadcaster>();
+            physicsEventsBroadcaster.Init(_physicsRouter, bulletEntity.Entity);
+            
             bulletView.gameObject.SetActive(true);
             _views.Add(bulletEntity, bulletView);
         }
@@ -85,6 +100,20 @@ namespace Asteroids.Scripts.PlayerShip
         {
             BulletView bulletView = _views[bulletEntity];
             _bulletsViewFactory.Reset(bulletEntity, bulletView);
+        }
+
+        private void OnDefaultBulletDied(Bullet bullet)
+        {
+            foreach (BulletEntity bulletEntity in _views.Keys)
+            {
+                if (bulletEntity.Entity == bullet)
+                {
+                    BulletView bulletView = _views[bulletEntity];
+                    _bulletsViewFactory.Reset(bulletEntity, bulletView);
+
+                    break;
+                }
+            }
         }
     }
 }

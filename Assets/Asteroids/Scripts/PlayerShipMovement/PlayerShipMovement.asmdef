@@ -1,10 +1,7 @@
 {
-    "name": "PlayerShip",
+    "name": "PlayerShipMovement",
     "rootNamespace": "",
-    "references": [
-        "GUID:2f377cf265af4df69f6e15397a41fd00",
-        "GUID:652878dcc12a40f19ac981d06f0ddfd4"
-    ],
+    "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
