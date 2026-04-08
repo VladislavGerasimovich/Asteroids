@@ -12,5 +12,6 @@ namespace Asteroids.Scripts.Enemies
         public Action<Enemy> OnEnded;
 
         public abstract void Update(float deltaTime);
+        public abstract void ChangeMovement(Vector2 direction, float time);
     }
 }
