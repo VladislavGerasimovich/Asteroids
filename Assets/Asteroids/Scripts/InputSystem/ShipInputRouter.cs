@@ -10,12 +10,19 @@ namespace Asteroids.Scripts.PlayerShip
         private InertMovement _inertMovement;
         private IInputService _inputService;
         private ShipWeaponsHandler _shipWeaponsHandler;
+        private InputBlocker _inputBlocker;
 
-        public ShipInputRouter(PlayerSpawner playerSpawner, ShipMovement shipMovement, ShipWeaponsHandler shipWeaponsHandler, MobileInputView mobileInputView)
+        public ShipInputRouter(
+            PlayerSpawner playerSpawner,
+            ShipMovement shipMovement,
+            ShipWeaponsHandler shipWeaponsHandler,
+            MobileInputView mobileInputView,
+            InputBlocker inputBlocker)
         {
             _playerSpawner = playerSpawner;
             _shipMovement = shipMovement;
             _shipWeaponsHandler = shipWeaponsHandler;
+            _inputBlocker = inputBlocker;
             _inertMovement = new InertMovement();
             
             if (Application.isEditor)
@@ -45,12 +52,19 @@ namespace Asteroids.Scripts.PlayerShip
                 mobileInputView.Show();
             }
         }
-        
+
         public void Tick()
         {
-            if (_inputService.TempAxis.y > 0)
+            if (_inputBlocker.IsInputEnabled == true)
             {
-                _inertMovement.Accelerate(_shipMovement.Forward);
+                if (_inputService.TempAxis.y > 0)
+                {
+                    _inertMovement.Accelerate(_shipMovement.Forward);
+                }
+                else
+                {
+                    _inertMovement.Slowdown();
+                }
             }
             else
             {
@@ -59,18 +73,22 @@ namespace Asteroids.Scripts.PlayerShip
 
             if (_inputService.TempAxis.x != 0)
             {
-                _shipMovement.Rotate(_inputService.TempAxis.x);
+                if (_inputBlocker.IsInputEnabled == true)
+                    _shipMovement.Rotate(_inputService.TempAxis.x);
             }
 
-            if (_inputService.IsFirstGunSlotButtonDown())
+            if (_inputBlocker.IsInputEnabled == true)
             {
-                _shipWeaponsHandler.OnFirstSlotGunButtonClicked();
+                if (_inputService.IsFirstGunSlotButtonDown())
+                {
+                    _shipWeaponsHandler.OnFirstSlotGunButtonClicked();
+                }
+                else if (_inputService.IsSecondGunSlotButtonDown())
+                {
+                    _shipWeaponsHandler.OnSecondSlotGunButtonClicked();
+                }
             }
-            else if (_inputService.IsSecondGunSlotButtonDown())
-            {
-                _shipWeaponsHandler.OnSecondSlotGunButtonClicked();
-            }
-            
+
             _shipMovement.MoveLooped(_inertMovement.Acceleration);
             _playerSpawner.CurrentPlayerShipView.Move(_shipMovement.Position, _shipMovement.Rotation);
         }

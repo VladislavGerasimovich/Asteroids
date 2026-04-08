@@ -1,27 +1,8 @@
-using System;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Asteroids.Scripts.OwnPhysics
 {
-    public class PhysicsEventsBroadcaster : MonoBehaviour
-    {
-        protected PhysicsRouter _router;
-        protected object _model;
-
-        public void Init(PhysicsRouter router, object model)
-        {
-            _router = router;
-            _model = model;
-        }
-
-        protected virtual void OnCollisionEnter2D(Collision2D collision)
-        {
-            if (collision.collider.TryGetComponent(out PhysicsEventsBroadcaster broadcaster))
-                _router.TryAddCollision(_model, broadcaster._model);
-        }
-    }
-
     public class PlayerPhysicsEventsBroadcaster : PhysicsEventsBroadcaster
     {
         private CollisionsRecords _collisionsRecords;
@@ -29,8 +10,8 @@ namespace Asteroids.Scripts.OwnPhysics
         
         public void Init(PhysicsRouter router, object model, CollisionsRecords collisionsRecords)
         {
-            _router = router;
-            _model = model;
+            Router = router;
+            Model = model;
             _collisionsRecords = collisionsRecords;
             _collisionsRecords.OnPlayerCollideWithEnemy += DisableCollisions;
         }
@@ -49,8 +30,8 @@ namespace Asteroids.Scripts.OwnPhysics
         
         protected override void OnCollisionEnter2D(Collision2D collision)
         {
-            if (collision.collider.TryGetComponent(out PhysicsEventsBroadcaster broadcaster))
-                _router.TryAddCollision(_model, broadcaster._model);
+            if(_canHandleCollisions)
+                base.OnCollisionEnter2D(collision);
         }
     }
 }

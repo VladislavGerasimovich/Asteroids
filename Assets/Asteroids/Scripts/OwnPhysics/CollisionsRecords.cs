@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Asteroids.Scripts.Bullets;
 using Asteroids.Scripts.Enemies;
+using Asteroids.Scripts.PlayerShip;
 
 namespace Asteroids.Scripts.OwnPhysics
 {
@@ -10,6 +11,7 @@ namespace Asteroids.Scripts.OwnPhysics
         public event Action<Enemy> OnEnemyDied;
         public event Action<DefaultBullet> OnDefaultBulletHitEnemy;
         public event Action<Asteroid> OnAsteroidDestroyed;
+        public event Action OnPlayerCollideWithEnemy;
         public event Action GameEnd;
         
         public IEnumerable<Record> Values()
@@ -27,6 +29,16 @@ namespace Asteroids.Scripts.OwnPhysics
             yield return IfCollided((Bullet bullet, Asteroid asteroid) =>
             {
                 OnAsteroidDestroyed?.Invoke(asteroid);
+            });
+            
+            yield return IfCollided((Bullet bullet, Asteroid asteroid) =>
+            {
+                OnAsteroidDestroyed?.Invoke(asteroid);
+            });
+            
+            yield return IfCollided((ShipMovement shipMovement, Enemy enemy) =>
+            {
+                OnPlayerCollideWithEnemy?.Invoke();
             });
 
             /*
