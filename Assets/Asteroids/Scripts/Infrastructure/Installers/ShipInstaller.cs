@@ -1,4 +1,3 @@
-using Asteroids.Scripts.PlayerCollision;
 using Asteroids.Scripts.PlayerShip;
 using Asteroids.Scripts.ViewFactories.Bullets;
 using UnityEngine;
@@ -19,7 +18,7 @@ namespace Asteroids.Scripts.Infrastructure
             Container.Bind<ShipMovement>().AsSingle();
             Container.Bind<MobileInputView>().FromInstance(mobileInputView).AsSingle();
             Container.BindInterfacesTo<ShipInputRouter>().AsSingle();
-            Container.BindInterfacesTo<PlayerCollisionHandler>().AsSingle();
+            Container.BindInterfacesAndSelfTo<PostCollisionMovement>().AsSingle();
             Container.BindInterfacesAndSelfTo<ShipWeaponsHandler>().AsSingle();
             Container.BindInterfacesAndSelfTo<InputBlocker>().AsSingle();
             Container.BindInterfacesAndSelfTo<PlayerSpawner>().FromInstance(playerSpawner).AsSingle();

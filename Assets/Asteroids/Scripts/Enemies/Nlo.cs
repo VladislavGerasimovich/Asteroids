@@ -1,4 +1,5 @@
 using Asteroids.Scripts.PlayerShip;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Asteroids.Scripts.Enemies
@@ -6,6 +7,11 @@ namespace Asteroids.Scripts.Enemies
     public class Nlo : Enemy
     {
         private TransformData _player;
+        private Vector2 _direction;
+        private bool _hasBounced;
+        private float _speedMultiplier;
+        private float _bounceMultiplier;
+        private float _normalMultiplier;
         
         public Nlo(Vector2 position, float rotation, float speed, TransformData player)
         {
@@ -13,12 +19,26 @@ namespace Asteroids.Scripts.Enemies
             Rotation = rotation;
             _player = player;
             Speed = speed;
+            _normalMultiplier = 1f;
+            _speedMultiplier = _normalMultiplier;
+            _bounceMultiplier = 2f;
         }
 
         public override void Update(float deltaTime)
         {
-            Position = Vector3.MoveTowards(Position, _player.Position, Speed * deltaTime);
-            LookAt(_player.Position);
+            if (!_hasBounced)
+            {
+                _direction = (_player.Position - Position).normalized;
+                LookAt(_player.Position);
+            }
+            
+            Position += _direction * Time.deltaTime * Speed * _speedMultiplier;
+        }
+        
+        public override void ChangeMovement(Vector2 direction, float time)
+        {
+            _direction = direction;
+            ChangeSpeed(time);
         }
         
         private void LookAt(Vector2 point)
@@ -29,6 +49,22 @@ namespace Asteroids.Scripts.Enemies
         private void Rotate(float delta)
         {
             Rotation = Mathf.Repeat(Rotation + delta, 360);
+        }
+
+        private async void ChangeSpeed(float time)
+        {
+            _hasBounced = true;
+            _speedMultiplier = _bounceMultiplier;
+            
+            while (time > 0)
+            {
+                time -= Time.deltaTime;
+                _speedMultiplier -= Time.deltaTime;
+                await UniTask.Yield(PlayerLoopTiming.Update);
+            }
+            
+            _speedMultiplier = _normalMultiplier;
+            _hasBounced = false;
         }
     }
 }

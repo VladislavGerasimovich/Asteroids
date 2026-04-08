@@ -11,25 +11,28 @@ namespace Asteroids.Scripts.PlayerShip
         private IInputService _inputService;
         private ShipWeaponsHandler _shipWeaponsHandler;
         private InputBlocker _inputBlocker;
+        private PostCollisionMovement _postCollisionMovement;
 
         public ShipInputRouter(
             PlayerSpawner playerSpawner,
             ShipMovement shipMovement,
             ShipWeaponsHandler shipWeaponsHandler,
             MobileInputView mobileInputView,
-            InputBlocker inputBlocker)
+            InputBlocker inputBlocker,
+            PostCollisionMovement postCollisionMovement)
         {
             _playerSpawner = playerSpawner;
             _shipMovement = shipMovement;
             _shipWeaponsHandler = shipWeaponsHandler;
             _inputBlocker = inputBlocker;
+            _postCollisionMovement = postCollisionMovement;
             _inertMovement = new InertMovement();
-            
+
             if (Application.isEditor)
             {
                 bool hasGamepad = false;
                 string[] joysticks = Input.GetJoystickNames();
-                
+
                 for (int i = 0; i < joysticks.Length; i++)
                 {
                     if (!string.IsNullOrEmpty(joysticks[i]))
@@ -39,11 +42,11 @@ namespace Asteroids.Scripts.PlayerShip
                     }
                 }
 
-                if(hasGamepad == false)
+                if (hasGamepad == false)
                 {
                     _inputService = new StandaloneInputService();
                 }
-                
+
                 mobileInputView.Hide();
             }
             else
@@ -68,7 +71,7 @@ namespace Asteroids.Scripts.PlayerShip
             }
             else
             {
-                _inertMovement.Slowdown();
+                _inertMovement.SlowAccelerate(_postCollisionMovement.PushDirection);
             }
 
             if (_inputService.TempAxis.x != 0)

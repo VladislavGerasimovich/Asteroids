@@ -33,6 +33,11 @@ namespace Asteroids.Scripts.Enemies
                 }
             }
         }
+
+        public override void ChangeMovement(Vector2 direction, float time)
+        {
+            _direction = direction;
+        }
     }
     
     public class PartOfAsteroid : Enemy
@@ -65,6 +70,11 @@ namespace Asteroids.Scripts.Enemies
                     _inScreen = false;
                 }
             }
+        }
+        
+        public override void ChangeMovement(Vector2 direction, float time)
+        {
+            _direction = direction;
         }
     }
 }

@@ -1,6 +1,8 @@
+using UnityEngine;
+
 namespace Asteroids.Scripts.ViewFactories.Effects
 {
-    public class EffectsViewFactory
+    public class EffectsViewFactory : MonoBehaviour
     {
         
     }

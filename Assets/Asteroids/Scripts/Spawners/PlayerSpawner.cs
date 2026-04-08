@@ -14,6 +14,8 @@ public class PlayerSpawner : MonoBehaviour, IInitializable
     private PhysicsRouter _physicsRouter;
     [Inject]
     private ShipMovement _shipMovement;
+    [Inject]
+    private CollisionsRecords _collisionsRecords;
     
     public void Initialize()
     {
@@ -23,7 +25,7 @@ public class PlayerSpawner : MonoBehaviour, IInitializable
             new Vector3(0.5f, 0.5f),
             Quaternion.identity,
             playerContainer.transform).GetComponent<PlayerShipView>();
-        PhysicsEventsBroadcaster physicsEventsBroadcaster = CurrentPlayerShipView.GetComponent<PhysicsEventsBroadcaster>();
-        physicsEventsBroadcaster.Init(_physicsRouter, _shipMovement);
+        PlayerPhysicsEventsBroadcaster playerPhysicsEventsBroadcaster = CurrentPlayerShipView.GetComponent<PlayerPhysicsEventsBroadcaster>();
+        playerPhysicsEventsBroadcaster.Init(_physicsRouter, _shipMovement, _collisionsRecords);
     }
 }

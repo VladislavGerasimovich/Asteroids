@@ -93,6 +93,7 @@ namespace Asteroids.Scripts.PlayerShip
             physicsEventsBroadcaster.Init(_physicsRouter, bulletEntity.Entity);
             
             bulletView.gameObject.SetActive(true);
+            
             _views.Add(bulletEntity, bulletView);
         }
 

@@ -1,56 +1,29 @@
-using System;
-using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Asteroids.Scripts.OwnPhysics
 {
     public class PhysicsEventsBroadcaster : MonoBehaviour
     {
-        protected PhysicsRouter _router;
-        protected object _model;
+        public PhysicsRouter Router { get; protected set; }
+        public object Model { get; protected set; }
+        public bool CanHandleCollisions { get; protected set; }
 
         public void Init(PhysicsRouter router, object model)
         {
-            _router = router;
-            _model = model;
+            Router = router;
+            Model = model;
+            CanHandleCollisions = true;
         }
 
-        protected virtual void OnCollisionEnter2D(Collision2D collision)
+        protected void OnCollisionEnter2D(Collision2D collision)
         {
             if (collision.collider.TryGetComponent(out PhysicsEventsBroadcaster broadcaster))
-                _router.TryAddCollision(_model, broadcaster._model);
-        }
-    }
-
-    public class PlayerPhysicsEventsBroadcaster : PhysicsEventsBroadcaster
-    {
-        private CollisionsRecords _collisionsRecords;
-        private bool _canHandleCollisions;
-        
-        public void Init(PhysicsRouter router, object model, CollisionsRecords collisionsRecords)
-        {
-            _router = router;
-            _model = model;
-            _collisionsRecords = collisionsRecords;
-            _collisionsRecords.OnPlayerCollideWithEnemy += DisableCollisions;
-        }
-
-        private void OnDisable()
-        {
-            _collisionsRecords.OnPlayerCollideWithEnemy -= DisableCollisions;
-        }
-
-        private async void DisableCollisions()
-        {
-            _canHandleCollisions = false;
-            await UniTask.WaitForSeconds(3f);
-            _canHandleCollisions = true;
-        }
-        
-        protected override void OnCollisionEnter2D(Collision2D collision)
-        {
-            if (collision.collider.TryGetComponent(out PhysicsEventsBroadcaster broadcaster))
-                _router.TryAddCollision(_model, broadcaster._model);
+            {
+                if (broadcaster.CanHandleCollisions && CanHandleCollisions)
+                {
+                    Router.TryAddCollision(Model, broadcaster.Model);
+                }
+            }
         }
     }
 }

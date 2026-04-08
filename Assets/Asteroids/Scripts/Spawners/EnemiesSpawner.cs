@@ -22,7 +22,7 @@ namespace Asteroids.Scripts.Enemies
         private int _minAsteroidPartsCount;
         private int _maxAsteroidPartsCount;
         private int _asteroidPartsCount;
-        
+        private Vector2 _pushDirection;
         private Enemy _enemyToRemove;
         private EnemyView _enemyViewToRemove;
         
@@ -48,6 +48,7 @@ namespace Asteroids.Scripts.Enemies
         {
             _collisionsRecords.OnEnemyDied += Reset;
             _collisionsRecords.OnAsteroidDestroyed += CreateAsteroidParts;
+            _collisionsRecords.OnPlayerEnemyCollision += OnCollisionWithPlayer;
         }
 
         public void Tick()
@@ -76,6 +77,7 @@ namespace Asteroids.Scripts.Enemies
         {
             _collisionsRecords.OnEnemyDied -= Reset;
             _collisionsRecords.OnAsteroidDestroyed -= CreateAsteroidParts;
+            _collisionsRecords.OnPlayerEnemyCollision -= OnCollisionWithPlayer;
         }
 
         private void CreateView(Enemy enemy)
@@ -166,6 +168,13 @@ namespace Asteroids.Scripts.Enemies
                 
                 _enemiesViewFactory.Reset(_enemyViewToRemove);
             }
+        }
+
+        private void OnCollisionWithPlayer(ShipMovement shipMovement, Enemy enemy)
+        {
+            _pushDirection = (enemy.Position - shipMovement.Position).normalized;
+
+            enemy.ChangeMovement(_pushDirection, 3f);
         }
     }
 }
