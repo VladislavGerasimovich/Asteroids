@@ -17,7 +17,10 @@ namespace Asteroids.Scripts.OwnPhysics
 
         private void OnDisable()
         {
-            _collisionsRecords.OnPlayerCollideWithEnemy -= DisableCollisions;
+            if (_collisionsRecords != null)
+            {
+                _collisionsRecords.OnPlayerCollideWithEnemy -= DisableCollisions;
+            }
         }
 
         private async void DisableCollisions()

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Asteroids.Scripts.Timers;
 using UnityEngine;
 
@@ -31,13 +30,6 @@ namespace Asteroids.Scripts.Bullets
             _timers.Tick(deltaTime);
         }
 
-        /*
-        public void StopAll(Bullet bullet)
-        {
-            List<BulletEntity> candidats = _entities.Where(entity => entity.Entity.Equals(bullet)).ToList();
-            candidats.ForEach(Stop);
-        }
-        */
         private void Stop(BulletEntity bulletEntity)
         {
             _entities.Remove(bulletEntity);
