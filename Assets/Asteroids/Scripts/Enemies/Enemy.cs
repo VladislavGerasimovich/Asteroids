@@ -1,12 +1,11 @@
 using System;
+using Asteroids.Scripts.PlayerShip;
 using UnityEngine;
 
 namespace Asteroids.Scripts.Enemies
 {
-    public abstract class Enemy
+    public abstract class Enemy : TransformData
     {
-        public Vector2 Position { get; protected set; }
-        public float Rotation { get; protected set; }
         public float Speed { get; protected set; }
         
         public Action<Enemy> OnEnded;

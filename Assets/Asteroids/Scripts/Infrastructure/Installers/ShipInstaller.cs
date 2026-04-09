@@ -1,4 +1,5 @@
 using Asteroids.Scripts.PlayerShip;
+using Asteroids.Scripts.PlayerShipEffects;
 using Asteroids.Scripts.ViewFactories.Bullets;
 using UnityEngine;
 using Zenject;
@@ -17,6 +18,7 @@ namespace Asteroids.Scripts.Infrastructure
             Container.Bind<Camera>().FromInstance(mainCamera).AsSingle();
             Container.Bind<ShipMovement>().AsSingle();
             Container.Bind<MobileInputView>().FromInstance(mobileInputView).AsSingle();
+            Container.BindInterfacesTo<PlayerShipEffectsHandler>().AsSingle();
             Container.BindInterfacesTo<ShipInputRouter>().AsSingle();
             Container.BindInterfacesAndSelfTo<PostCollisionMovement>().AsSingle();
             Container.BindInterfacesAndSelfTo<ShipWeaponsHandler>().AsSingle();

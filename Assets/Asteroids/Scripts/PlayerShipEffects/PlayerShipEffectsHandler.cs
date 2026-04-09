@@ -1,6 +1,8 @@
 using System;
+using Asteroids.Scripts.Enemies;
 using Asteroids.Scripts.OwnPhysics;
 using Asteroids.Scripts.PlayerShip;
+using Asteroids.Scripts.ViewFactories.Effects;
 using Zenject;
 
 namespace Asteroids.Scripts.PlayerShipEffects
@@ -9,26 +11,31 @@ namespace Asteroids.Scripts.PlayerShipEffects
     {
         private CollisionsRecords _collisionsRecords;
         private ShipMovement _shipMovement;
+        private EffectsSpawner _effectsSpawner;
 
-        public PlayerShipEffectsHandler(CollisionsRecords collisionsRecords, ShipMovement shipMovement)
+        public PlayerShipEffectsHandler(
+            CollisionsRecords collisionsRecords,
+            ShipMovement shipMovement,
+            EffectsSpawner effectsSpawner)
         {
+            _effectsSpawner = effectsSpawner;
             _shipMovement = shipMovement;
             _collisionsRecords = collisionsRecords;
         }
 
         public void Initialize()
         {
-            _collisionsRecords.OnPlayerCollideWithEnemy += ShowInvincible;
+            _collisionsRecords.OnPlayerCollideWithEnemy += ShowInvulnerability;
         }
 
         public void Dispose()
         {
-            _collisionsRecords.OnPlayerCollideWithEnemy -= ShowInvincible;
+            _collisionsRecords.OnPlayerCollideWithEnemy -= ShowInvulnerability;
         }
 
-        private void ShowInvincible()
+        private void ShowInvulnerability()
         {
-            throw new NotImplementedException();
+            _effectsSpawner.CreateView(Effects.Invulnerability, _shipMovement);
         }
     }
 }
