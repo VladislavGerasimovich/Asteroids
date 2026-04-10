@@ -1,6 +1,9 @@
+using Asteroids.Scripts.Enemies;
+using Asteroids.Scripts.PlayerHealthSystem;
 using Asteroids.Scripts.PlayerShip;
 using Asteroids.Scripts.PlayerShipEffects;
 using Asteroids.Scripts.ViewFactories.Bullets;
+using Asteroids.Scripts.ViewFactories.PlayerHealth;
 using UnityEngine;
 using Zenject;
 
@@ -12,6 +15,7 @@ namespace Asteroids.Scripts.Infrastructure
         [SerializeField] private PlayerSpawner playerSpawner;
         [SerializeField] private MobileInputView mobileInputView;
         [SerializeField] private BulletsViewFactory bulletsViewFactory;
+        [SerializeField] private PlayerHealthView playerHealthView;
 
         public override void InstallBindings()
         {
@@ -25,6 +29,10 @@ namespace Asteroids.Scripts.Infrastructure
             Container.BindInterfacesAndSelfTo<InputBlocker>().AsSingle();
             Container.BindInterfacesAndSelfTo<PlayerSpawner>().FromInstance(playerSpawner).AsSingle();
             Container.BindInterfacesAndSelfTo<BulletsViewFactory>().FromInstance(bulletsViewFactory).AsSingle();
+
+            Container.BindInterfacesAndSelfTo<PlayerHealth>().AsSingle();
+            Container.BindInterfacesTo<PlayerHealthsSpawner>().AsSingle();
+            Container.Bind<PlayerHealthView>().FromInstance(playerHealthView).AsSingle();
         }
     }
 }
