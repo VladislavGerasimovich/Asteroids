@@ -8,7 +8,7 @@ namespace Asteroids.Scripts.PlayerHealthSystem
     {
         private CollisionsRecords _collisionsRecords;
 
-        public event Action OnHealthChanged;
+        public event Action OnReduced;
         
         public float Health { get; private set; }
 
@@ -31,7 +31,7 @@ namespace Asteroids.Scripts.PlayerHealthSystem
         private void ReduceHealth()
         {
             Health--;
-            OnHealthChanged?.Invoke();
+            OnReduced?.Invoke();
         }
     }
 }

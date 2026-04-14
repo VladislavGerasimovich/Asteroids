@@ -4,6 +4,7 @@ using Asteroids.Scripts.Bullets;
 using Asteroids.Scripts.Guns;
 using Asteroids.Scripts.OwnPhysics;
 using Asteroids.Scripts.ViewFactories.Bullets;
+using Asteroids.Scripts.ViewModels;
 using UnityEngine;
 using Zenject;
 
@@ -22,13 +23,19 @@ namespace Asteroids.Scripts.PlayerShip
         private LaserGunRollback _laserGunRollback;
         private PhysicsRouter _physicsRouter;
         private CollisionsRecords _collisionsRecords;
+        private LaserGunViewModel _laserGunViewModel;
+        private LaserGunRollbackViewModel _laserGunRollbackViewModel;
 
         public ShipWeaponsHandler(
             ShipMovement shipMovement,
             BulletsViewFactory bulletsViewFactory,
             PhysicsRouter physicsRouter,
-            CollisionsRecords collisionsRecords)
+            CollisionsRecords collisionsRecords,
+            LaserGunViewModel laserGunViewModel,
+            LaserGunRollbackViewModel laserGunRollbackViewModel)
         {
+            _laserGunRollbackViewModel = laserGunRollbackViewModel;
+            _laserGunViewModel = laserGunViewModel;
             _bulletsViewFactory = bulletsViewFactory;
             _shipMovement = shipMovement;
             _physicsRouter = physicsRouter;
@@ -41,7 +48,9 @@ namespace Asteroids.Scripts.PlayerShip
             _bulletsSimulation = new BulletsSimulation();
             _defaultGun = new DefaultGun();
             _laserGun = new LaserGun(3);
+            _laserGunViewModel.Init(_laserGun);
             _laserGunRollback = new LaserGunRollback(_laserGun, 3f);
+            _laserGunRollbackViewModel.Init(_laserGunRollback);
             _firstSlotGun = _defaultGun;
             _secondSlotGun = _laserGun;
 

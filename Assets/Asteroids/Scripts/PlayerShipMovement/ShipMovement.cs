@@ -24,13 +24,12 @@ namespace Asteroids.Scripts.PlayerShip
             Position = nextPosition;
         }
         
-        public void Rotate(float direction) 
+        public void Rotate(float direction)
         {
             if (direction == 0)
                 throw new InvalidOperationException(nameof(direction));
 
             direction = direction > 0 ? -1 : 1;
-
             Rotation = Mathf.Repeat(Rotation + (direction * Time.deltaTime * _degreesPerSecond), 360);
         }
     }
