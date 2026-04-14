@@ -1,3 +1,4 @@
+using Asteroids.Scripts.ViewModels;
 using UnityEngine;
 using Zenject;
 
@@ -12,6 +13,7 @@ namespace Asteroids.Scripts.PlayerShip
         private ShipWeaponsHandler _shipWeaponsHandler;
         private InputBlocker _inputBlocker;
         private PostCollisionMovement _postCollisionMovement;
+        private InertMovementViewModel _inertMovementViewModel;
 
         public ShipInputRouter(
             PlayerSpawner playerSpawner,
@@ -19,8 +21,10 @@ namespace Asteroids.Scripts.PlayerShip
             ShipWeaponsHandler shipWeaponsHandler,
             MobileInputView mobileInputView,
             InputBlocker inputBlocker,
-            PostCollisionMovement postCollisionMovement)
+            PostCollisionMovement postCollisionMovement,
+            InertMovementViewModel inertMovementViewModel)
         {
+            _inertMovementViewModel = inertMovementViewModel;
             _playerSpawner = playerSpawner;
             _shipMovement = shipMovement;
             _shipWeaponsHandler = shipWeaponsHandler;
@@ -28,6 +32,8 @@ namespace Asteroids.Scripts.PlayerShip
             _postCollisionMovement = postCollisionMovement;
             _inertMovement = new InertMovement();
 
+            _inertMovementViewModel.Init(_inertMovement);
+            
             if (Application.isEditor)
             {
                 bool hasGamepad = false;

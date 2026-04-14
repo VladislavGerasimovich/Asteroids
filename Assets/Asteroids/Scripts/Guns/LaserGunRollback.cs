@@ -5,24 +5,25 @@ namespace Asteroids.Scripts.Guns
         private readonly float _reloadTime;
         private readonly LaserGun _laserGun;
 
-        private float _accumulatedTime;
+        public float AccumulatedTime { get; private set; }
 
         public LaserGunRollback(LaserGun laserGun, float reloadTime = 3f)
         {
             _laserGun = laserGun;
             _reloadTime = reloadTime;
+            AccumulatedTime = _reloadTime;
         }
 
         public void Update(float deltaTime)
         {
             if (_laserGun.CurrentAmmo < _laserGun.MaxAmmo)
             {
-                _accumulatedTime += deltaTime;
+                AccumulatedTime -= deltaTime;
                 
-                if (_accumulatedTime >= _reloadTime)
+                if (AccumulatedTime <= 0)
                 {
-                    _accumulatedTime = 0f;
                     _laserGun.TryAddBullet();
+                    AccumulatedTime = _reloadTime;
                 }
             }
         }

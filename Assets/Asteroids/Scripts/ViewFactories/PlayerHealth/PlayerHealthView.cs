@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using Zenject;
 
 namespace Asteroids.Scripts.ViewFactories.PlayerHealth
 {
@@ -27,6 +26,9 @@ namespace Asteroids.Scripts.ViewFactories.PlayerHealth
 
         public void HideHeart()
         {
+            if (_views == null)
+                return;
+            
             Debug.Log("[PlayerHealthView] HideHeart");
             var lastActiveHeart = _views.LastOrDefault(h => h.IsActive);
             

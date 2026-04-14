@@ -1,11 +1,11 @@
-using System;
 using Asteroids.Scripts.PlayerHealthSystem;
 using Asteroids.Scripts.ViewFactories.PlayerHealth;
+using MVVM;
 using Zenject;
 
 namespace Asteroids.Scripts.Enemies
 {
-    public class PlayerHealthsSpawner : IInitializable, IDisposable
+    public class PlayerHealthsSpawner : IInitializable
     {
         private PlayerHealthView _playerHealthView;
         private PlayerHealth _playerHealth;
@@ -19,15 +19,10 @@ namespace Asteroids.Scripts.Enemies
         public void Initialize()
         {
             _playerHealthView.CreateViews((int)_playerHealth.Health);
-            _playerHealth.OnHealthChanged += ReduceHeart;
         }
-
-        public void Dispose()
-        {
-            _playerHealth.OnHealthChanged -= ReduceHeart;
-        }
-
-        private void ReduceHeart()
+        
+        [Method("OnHealthReduced")]
+        public void ReduceHeart(int count)
         {
             _playerHealthView.HideHeart();
         }

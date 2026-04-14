@@ -23,7 +23,8 @@ namespace Asteroids.Scripts.PlayerShip
         
         public void Slowdown()
         {
-            Acceleration -= Acceleration * (Time.deltaTime / _secondsToStop);
+            ReduceAcceleration();
+            _hasBounced = false;
         }
 
         public void SlowAccelerate(Vector2 direction)
@@ -37,8 +38,13 @@ namespace Asteroids.Scripts.PlayerShip
             }
             else
             {
-                Slowdown();
+                ReduceAcceleration();
             }
+        }
+
+        private void ReduceAcceleration()
+        {
+            Acceleration -= Acceleration * (Time.deltaTime / _secondsToStop);
         }
     }
 }
