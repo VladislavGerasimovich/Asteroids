@@ -2,6 +2,6 @@ namespace Asteroids.Scripts.Bullets
 {
     public class LaserGunBullet : Bullet
     {
-        public LaserGunBullet() : base(5f, 0){ }
+        public LaserGunBullet(float lifeTime, float speed) : base(lifeTime, speed){ }
     }
 }

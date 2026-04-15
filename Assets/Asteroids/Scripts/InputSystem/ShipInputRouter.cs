@@ -1,3 +1,4 @@
+using Asteroids.Scripts.SaveSystem;
 using Asteroids.Scripts.ViewModels;
 using UnityEngine;
 using Zenject;
@@ -22,7 +23,8 @@ namespace Asteroids.Scripts.PlayerShip
             MobileInputView mobileInputView,
             InputBlocker inputBlocker,
             PostCollisionMovement postCollisionMovement,
-            InertMovementViewModel inertMovementViewModel)
+            InertMovementViewModel inertMovementViewModel,
+            DataManager dataManager)
         {
             _inertMovementViewModel = inertMovementViewModel;
             _playerSpawner = playerSpawner;
@@ -30,7 +32,7 @@ namespace Asteroids.Scripts.PlayerShip
             _shipWeaponsHandler = shipWeaponsHandler;
             _inputBlocker = inputBlocker;
             _postCollisionMovement = postCollisionMovement;
-            _inertMovement = new InertMovement();
+            _inertMovement = new InertMovement(dataManager);
 
             _inertMovementViewModel.Init(_inertMovement);
             

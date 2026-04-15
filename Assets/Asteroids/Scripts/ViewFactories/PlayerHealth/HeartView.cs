@@ -20,7 +20,6 @@ namespace Asteroids.Scripts.ViewFactories.PlayerHealth
 
         public void Show()
         {
-            Debug.Log("[HeartView] Show");
             Fill();
         }
         

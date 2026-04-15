@@ -297,6 +297,8 @@ GameObject:
   - component: {fileID: 87702456}
   - component: {fileID: 87702457}
   - component: {fileID: 87702458}
+  - component: {fileID: 87702459}
+  - component: {fileID: 87702460}
   m_Layer: 0
   m_Name: '[Systems]'
   m_TagString: Untagged
@@ -323,6 +325,8 @@ MonoBehaviour:
   - {fileID: 87702456}
   - {fileID: 87702457}
   - {fileID: 87702458}
+  - {fileID: 87702459}
+  - {fileID: 87702460}
   _installerPrefabs: []
   _autoRun: 1
   OnPreInstall:
@@ -420,6 +424,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d20015b0c94143bf9ddb5b5d8ccc9331, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &87702459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 87702451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14c93d07743a4e269cc247d2c67703f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &87702460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 87702451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 672fa694900d4ddf9b8fb411c132aa3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &139693953

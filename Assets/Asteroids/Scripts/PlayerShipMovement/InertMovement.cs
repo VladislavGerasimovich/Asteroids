@@ -1,17 +1,27 @@
+using Asteroids.Scripts.SaveSystem;
 using UnityEngine;
 
 namespace Asteroids.Scripts.PlayerShip
 {
     public class InertMovement
     {
-        private readonly float _unitsPerSecond = 0.0005f;
-        private readonly float _maxSpeed = 0.0015f;
-        private readonly float _maxBounceSpeed = 0.0035f;
-        private readonly float _secondsToStop = 0.2f;
+        private readonly float _unitsPerSecond;
+        private readonly float _maxSpeed;
+        private readonly float _maxBounceSpeed;
+        private readonly float _secondsToStop;
 
         private bool _hasBounced;
 
         public Vector2 Acceleration { get; private set; }
+
+        public InertMovement(DataManager dataManager)
+        {
+            dataManager.LoadProgressOrInitNew();
+            _unitsPerSecond = dataManager.UnitsPerSecond;
+            _maxSpeed = dataManager.MaxSpeed;
+            _maxBounceSpeed = dataManager.MaxBounceSpeed;
+            _secondsToStop = dataManager.SecondsToStop;
+        }
 
         public void Accelerate(Vector2 forward)
         {

@@ -30,7 +30,7 @@ namespace Asteroids.Scripts.ViewFactories.Enemies
         
         public EnemyView GetTemplate(Enemy enemy)
         {
-            if (enemy is Nlo)
+            if (enemy is Ufo)
                 return _nloPool.GetFreeElement();
             if (enemy is Asteroid)
                 return _asteroidPool.GetFreeElement();
@@ -42,7 +42,7 @@ namespace Asteroids.Scripts.ViewFactories.Enemies
         
         public void Reset(EnemyView enemyView)
         {
-            if (enemyView.Enemy is Nlo)
+            if (enemyView.Enemy is Ufo)
                 _nloPool.ResetElement(enemyView);
             if (enemyView.Enemy is Asteroid)
                 _asteroidPool.ResetElement(enemyView);

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Asteroids.Scripts.OwnPhysics;
 using Asteroids.Scripts.PlayerShip;
+using Asteroids.Scripts.SaveSystem;
 using Asteroids.Scripts.ViewFactories.Enemies;
 using UnityEngine;
 using Zenject;
@@ -25,14 +26,21 @@ namespace Asteroids.Scripts.Enemies
         private Vector2 _pushDirection;
         private Enemy _enemyToRemove;
         private EnemyView _enemyViewToRemove;
-        
+        private DataManager _dataManager;
+        private Vector2 _circlePositionOffset;
+        private float _positionMinOffset;
+        private float _positionMaxOffset;
+
         public EnemiesSpawner(
             Camera camera,
             EnemiesViewFactory enemiesViewFactory,
             ShipMovement playerShipMovement,
             PhysicsRouter physicsRouter,
-            CollisionsRecords collisionsRecords)
+            CollisionsRecords collisionsRecords,
+            DataManager dataManager)
         {
+            _dataManager = dataManager;
+            _dataManager.LoadProgressOrInitNew();
             _camera = camera;
             _enemiesViewFactory = enemiesViewFactory;
             _playerShipMovement = playerShipMovement;
@@ -42,6 +50,9 @@ namespace Asteroids.Scripts.Enemies
             _enemyViews = new List<EnemyView>();
             _minAsteroidPartsCount = 1;
             _maxAsteroidPartsCount = 4;
+            _circlePositionOffset = new Vector2(0.5f, 0.5f);
+            _positionMinOffset = 0.1f;
+            _positionMaxOffset = 0.9f;
         }
 
         public void Initialize()
@@ -55,9 +66,9 @@ namespace Asteroids.Scripts.Enemies
         {
             if (Input.GetKeyDown(KeyCode.G))
             {
-                Nlo nlo = CreateNlo();
-                nlo.OnEnded += Reset;
-                CreateView(nlo);
+                Ufo ufo = CreateUfo();
+                ufo.OnEnded += Reset;
+                CreateView(ufo);
             }
             
             if (Input.GetKeyDown(KeyCode.K))
@@ -96,30 +107,30 @@ namespace Asteroids.Scripts.Enemies
             _enemyViews.Add(enemyView);
         }
 
-        private Nlo CreateNlo()
+        private Ufo CreateUfo()
         {
-            return new Nlo(GetRandomPositionInsideUnitCircle(), 0, 0.1f, _playerShipMovement);
+            return new Ufo(GetRandomPositionInsideUnitCircle(), 0, _dataManager.UfoSpeed, _playerShipMovement);
         }
         
         private Asteroid CreateAsteroid()
         {
             Vector2 randomPosition = GetRandomPositionInsideUnitCircle();
-            return new Asteroid(randomPosition, 0, GetDirectionThroughtScreen(randomPosition), 0.1f);
+            return new Asteroid(randomPosition, 0, GetDirectionThroughtScreen(randomPosition), _dataManager.AsteroidSpeed);
         }
         
         private PartOfAsteroid CreatePartOfAsteroid(Asteroid asteroid)
         {
-            return new PartOfAsteroid(asteroid.Position, 0, GetDirectionThroughtScreen(asteroid.Position), 0.1f);
+            return new PartOfAsteroid(asteroid.Position, 0, GetDirectionThroughtScreen(asteroid.Position), _dataManager.PartOfAsteroidSpeed);
         }
         
         private Vector2 GetRandomPositionInsideUnitCircle()
         {
-            return Random.insideUnitCircle.normalized + new Vector2(0.5f, 0.5f);
+            return Random.insideUnitCircle.normalized + _circlePositionOffset;
         }
         
-        private static Vector2 GetDirectionThroughtScreen(Vector2 position)
+        private Vector2 GetDirectionThroughtScreen(Vector2 position)
         {
-            return (new Vector2(Random.Range(0.1f, 0.9f), Random.Range(0.1f, 0.9f)) - position).normalized;
+            return (new Vector2(Random.Range(_positionMinOffset, _positionMaxOffset), Random.Range(_positionMinOffset, _positionMaxOffset)) - position).normalized;
         }
 
         private void CreateAsteroidParts(Asteroid asteroid)
@@ -174,7 +185,7 @@ namespace Asteroids.Scripts.Enemies
         {
             _pushDirection = (enemy.Position - shipMovement.Position).normalized;
 
-            enemy.ChangeMovement(_pushDirection, 3f);
+            enemy.ChangeMovement(_pushDirection, _dataManager.BouncingTime);
         }
     }
 }

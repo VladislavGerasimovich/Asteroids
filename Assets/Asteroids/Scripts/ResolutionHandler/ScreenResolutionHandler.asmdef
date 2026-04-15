@@ -1,8 +1,7 @@
 {
-    "name": "PlayerHealthSystem",
+    "name": "ScreenResolutionHandler",
     "rootNamespace": "",
     "references": [
-        "GUID:63f075d242b348c6a1876db07863d396",
         "GUID:56345db4bf7c481c8434cb078ba7045b"
     ],
     "includePlatforms": [],
