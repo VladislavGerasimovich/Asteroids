@@ -29,7 +29,6 @@ namespace Asteroids.Scripts.ViewFactories.PlayerHealth
             if (_views == null)
                 return;
             
-            Debug.Log("[PlayerHealthView] HideHeart");
             var lastActiveHeart = _views.LastOrDefault(h => h.IsActive);
             
             if (lastActiveHeart != null)

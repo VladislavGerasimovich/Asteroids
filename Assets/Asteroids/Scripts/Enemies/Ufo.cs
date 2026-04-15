@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Asteroids.Scripts.Enemies
 {
-    public class Nlo : Enemy
+    public class Ufo : Enemy
     {
         private TransformData _player;
         private Vector2 _direction;
@@ -13,7 +13,7 @@ namespace Asteroids.Scripts.Enemies
         private float _bounceMultiplier;
         private float _normalMultiplier;
         
-        public Nlo(Vector2 position, float rotation, float speed, TransformData player)
+        public Ufo(Vector2 position, float rotation, float speed, TransformData player)
         {
             Position = position;
             Rotation = rotation;

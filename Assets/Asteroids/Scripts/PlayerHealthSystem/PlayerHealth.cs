@@ -1,5 +1,6 @@
 using System;
 using Asteroids.Scripts.OwnPhysics;
+using Asteroids.Scripts.SaveSystem;
 using Zenject;
 
 namespace Asteroids.Scripts.PlayerHealthSystem
@@ -12,10 +13,11 @@ namespace Asteroids.Scripts.PlayerHealthSystem
         
         public float Health { get; private set; }
 
-        public PlayerHealth(CollisionsRecords collisionsRecords)
+        public PlayerHealth(CollisionsRecords collisionsRecords, DataManager dataManager)
         {
             _collisionsRecords = collisionsRecords;
-            Health = 3;
+            dataManager.LoadProgressOrInitNew();
+            Health = dataManager.PlayerShipHealth;
         }
         
         public void Initialize()

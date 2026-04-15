@@ -6,6 +6,7 @@ using UnityEngine;
 using Zenject;
 using Object = UnityEngine.Object;
 
+#if UNITY_EDITOR
 namespace SampleGame
 {
     public sealed class MonoViewBinder : MonoBehaviour
@@ -90,3 +91,4 @@ namespace SampleGame
         }
     }
 }
+#endif

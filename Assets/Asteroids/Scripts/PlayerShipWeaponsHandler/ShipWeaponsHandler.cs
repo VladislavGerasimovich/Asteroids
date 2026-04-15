@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Asteroids.Scripts.Bullets;
 using Asteroids.Scripts.Guns;
 using Asteroids.Scripts.OwnPhysics;
+using Asteroids.Scripts.SaveSystem;
 using Asteroids.Scripts.ViewFactories.Bullets;
 using Asteroids.Scripts.ViewModels;
 using UnityEngine;
@@ -25,6 +26,7 @@ namespace Asteroids.Scripts.PlayerShip
         private CollisionsRecords _collisionsRecords;
         private LaserGunViewModel _laserGunViewModel;
         private LaserGunRollbackViewModel _laserGunRollbackViewModel;
+        private DataManager _dataManager;
 
         public ShipWeaponsHandler(
             ShipMovement shipMovement,
@@ -32,8 +34,10 @@ namespace Asteroids.Scripts.PlayerShip
             PhysicsRouter physicsRouter,
             CollisionsRecords collisionsRecords,
             LaserGunViewModel laserGunViewModel,
-            LaserGunRollbackViewModel laserGunRollbackViewModel)
+            LaserGunRollbackViewModel laserGunRollbackViewModel,
+            DataManager dataManager)
         {
+            _dataManager = dataManager;
             _laserGunRollbackViewModel = laserGunRollbackViewModel;
             _laserGunViewModel = laserGunViewModel;
             _bulletsViewFactory = bulletsViewFactory;
@@ -45,11 +49,12 @@ namespace Asteroids.Scripts.PlayerShip
         
         public void Initialize()
         {
+            _dataManager.LoadProgressOrInitNew();
             _bulletsSimulation = new BulletsSimulation();
-            _defaultGun = new DefaultGun();
-            _laserGun = new LaserGun(3);
+            _defaultGun = new DefaultGun(_dataManager.DefaultGunBulletLifeTime, _dataManager.DefaultGunBulletSpeed);
+            _laserGun = new LaserGun(_dataManager.LaserGunBullets, _dataManager.LaserGunBulletLifeTime, _dataManager.LaserGunBulletSpeed);
             _laserGunViewModel.Init(_laserGun);
-            _laserGunRollback = new LaserGunRollback(_laserGun, 3f);
+            _laserGunRollback = new LaserGunRollback(_laserGun, _dataManager.LaserGunRollback);
             _laserGunRollbackViewModel.Init(_laserGunRollback);
             _firstSlotGun = _defaultGun;
             _secondSlotGun = _laserGun;
