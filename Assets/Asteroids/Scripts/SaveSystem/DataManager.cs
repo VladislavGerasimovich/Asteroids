@@ -29,6 +29,13 @@ namespace Asteroids.Scripts.SaveSystem
         public float AsteroidSpeed => _saveData.Enemies.AsteroidSpeed;
         public float PartOfAsteroidSpeed => _saveData.Enemies.PartOfAsteroidSpeed;
         public float BouncingTime => _saveData.Enemies.BouncingTime;
+
+        public int MaxEnemyCount => _saveData.EnemiesSpawner.MaxEnemyCount;
+        public float SpawnDelay => _saveData.EnemiesSpawner.SpawnDelay;
+
+        public int ScreenWidth => _saveData.ResolutionSetter.Width;
+        public int ScreenHeight => _saveData.ResolutionSetter.Height;
+        public bool IsFullScreen => _saveData.ResolutionSetter.IsFullScreen;
         
         public DataManager()
         {
@@ -36,6 +43,15 @@ namespace Asteroids.Scripts.SaveSystem
             _jsonSaver = new JsonSaver();
         }
 
+        public void Tick()
+        {
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                InitNewData();
+                Save();
+            }
+        }
+        
         public void LoadProgressOrInitNew()
         {
             _hasSavedData = _jsonSaver.Load(ref _saveData);
@@ -75,15 +91,13 @@ namespace Asteroids.Scripts.SaveSystem
             _saveData.Enemies.AsteroidSpeed = 0.1f;
             _saveData.Enemies.PartOfAsteroidSpeed = 0.2f;
             _saveData.Enemies.BouncingTime = 3f;
-        }
 
-        public void Tick()
-        {
-            if (Input.GetKeyDown(KeyCode.F))
-            {
-                InitNewData();
-                Save();
-            }
+            _saveData.EnemiesSpawner.MaxEnemyCount = 10;
+            _saveData.EnemiesSpawner.SpawnDelay = 1f;
+
+            _saveData.ResolutionSetter.Width = 1000;
+            _saveData.ResolutionSetter.Height = 1000;
+            _saveData.ResolutionSetter.IsFullScreen = true;
         }
     }
 }

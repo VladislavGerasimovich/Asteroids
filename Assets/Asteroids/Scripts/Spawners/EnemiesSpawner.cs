@@ -30,6 +30,8 @@ namespace Asteroids.Scripts.Enemies
         private Vector2 _circlePositionOffset;
         private float _positionMinOffset;
         private float _positionMaxOffset;
+        private float _accumulatedTime;
+        private int _randomEnemyIndex;
 
         public EnemiesSpawner(
             Camera camera,
@@ -53,6 +55,7 @@ namespace Asteroids.Scripts.Enemies
             _circlePositionOffset = new Vector2(0.5f, 0.5f);
             _positionMinOffset = 0.1f;
             _positionMaxOffset = 0.9f;
+            _accumulatedTime = _dataManager.SpawnDelay;
         }
 
         public void Initialize()
@@ -64,20 +67,8 @@ namespace Asteroids.Scripts.Enemies
 
         public void Tick()
         {
-            if (Input.GetKeyDown(KeyCode.G))
-            {
-                Ufo ufo = CreateUfo();
-                ufo.OnEnded += Reset;
-                CreateView(ufo);
-            }
+            CreateEnemies();
             
-            if (Input.GetKeyDown(KeyCode.K))
-            {
-                Asteroid asteroid = CreateAsteroid();
-                asteroid.OnEnded += Reset;
-                CreateView(asteroid);
-            }
-
             foreach (Enemy enemy in _enemies.ToList())
             {
                 enemy.Update(Time.deltaTime);
@@ -101,10 +92,43 @@ namespace Asteroids.Scripts.Enemies
             
             if (enemyView.TryGetComponent(out BoxCollider2D boxCollider))
                 boxCollider.enabled = true;
-            
+
+            enemyView.transform.position = _camera.ViewportToWorldPoint(GetRandomPositionInsideUnitCircle());
             enemyView.gameObject.SetActive(true);
             _enemies.Add(enemy);
             _enemyViews.Add(enemyView);
+        }
+
+        private void CreateEnemies()
+        {
+            if (_enemies.Count < _dataManager.MaxEnemyCount)
+            {
+                if (_accumulatedTime >= _dataManager.SpawnDelay)
+                {
+                    CreateRandomEnemy();
+                    _accumulatedTime = 0f;
+                }
+                
+                _accumulatedTime += Time.deltaTime;
+            }
+        }
+
+        private void CreateRandomEnemy()
+        {
+            _randomEnemyIndex = Random.Range(0, 2);
+
+            if (_randomEnemyIndex == 0)
+            {
+                Ufo ufo = CreateUfo();
+                ufo.OnEnded += Reset;
+                CreateView(ufo);
+            }
+            else if (_randomEnemyIndex == 1)
+            {
+                Asteroid asteroid = CreateAsteroid();
+                asteroid.OnEnded += Reset;
+                CreateView(asteroid);
+            }
         }
 
         private Ufo CreateUfo()
@@ -176,7 +200,7 @@ namespace Asteroids.Scripts.Enemies
                     boxCollider.enabled = false;
                 
                 _enemyViews.Remove(_enemyViewToRemove);
-                
+                _enemyViewToRemove.transform.position = _camera.ViewportToWorldPoint(GetRandomPositionInsideUnitCircle());
                 _enemiesViewFactory.Reset(_enemyViewToRemove);
             }
         }

@@ -1,12 +1,13 @@
 using System;
 using MVVM;
 using Sirenix.OdinInspector;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 using Zenject;
 using Object = UnityEngine.Object;
 
-#if UNITY_EDITOR
 namespace SampleGame
 {
     public sealed class MonoViewBinder : MonoBehaviour
@@ -25,9 +26,11 @@ namespace SampleGame
         [SerializeField]
         private Object view;
 
+#if UNITY_EDITOR
         [ShowIf("@this.viewBinding == BindingMode.FromResolve || this.viewBinding == BindingMode.FromResolveId")]
         [SerializeField]
         private MonoScript viewType;
+#endif
 
         [ShowIf(nameof(viewBinding), BindingMode.FromResolveId)]
         [SerializeField]
@@ -41,10 +44,11 @@ namespace SampleGame
         [SerializeField]
         private Object viewModel;
 
+#if UNITY_EDITOR
         [ShowIf("@this.viewModelBinding == BindingMode.FromResolve || this.viewModelBinding == BindingMode.FromResolveId")]
         [SerializeField]
         private MonoScript viewModelType;
-
+#endif
         [ShowIf(nameof(viewModelBinding), BindingMode.FromResolveId)]
         [SerializeField]
         private string viewModelId;
@@ -91,4 +95,3 @@ namespace SampleGame
         }
     }
 }
-#endif

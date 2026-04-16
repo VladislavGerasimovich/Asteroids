@@ -1,5 +1,6 @@
 using System;
 using Asteroids.Scripts.OwnPhysics;
+using Asteroids.Scripts.SaveSystem;
 using Cysharp.Threading.Tasks;
 using Zenject;
 
@@ -8,11 +9,13 @@ namespace Asteroids.Scripts.PlayerShip
     public class InputBlocker : IInitializable, IDisposable
     {
         private CollisionsRecords _collisionsRecords;
-        
+        private DataManager _dataManager;
+
         public bool IsInputEnabled { get; private set; }
 
-        private InputBlocker(CollisionsRecords collisionsRecords)
+        private InputBlocker(CollisionsRecords collisionsRecords, DataManager dataManager)
         {
+            _dataManager = dataManager;
             _collisionsRecords = collisionsRecords;
         }
         
@@ -30,7 +33,7 @@ namespace Asteroids.Scripts.PlayerShip
         private async void BlockInput()
         {
             IsInputEnabled = false;
-            await UniTask.WaitForSeconds(3);
+            await UniTask.WaitForSeconds(_dataManager.BouncingTime);
             IsInputEnabled = true;
         }
     }

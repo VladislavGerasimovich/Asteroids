@@ -5,12 +5,16 @@ namespace Asteroids.Scripts.SaveSystem
         public PlayerShipData PlayerShip;
         public PlayerWeaponData PlayerWeapon;
         public EnemiesData Enemies;
+        public ScreenResolutionSetter ResolutionSetter;
+        public EnemiesSpawnerData EnemiesSpawner;
 
         public SaveData()
         {
             PlayerShip = new PlayerShipData();
             PlayerWeapon = new PlayerWeaponData();
             Enemies = new EnemiesData();
+            ResolutionSetter = new ScreenResolutionSetter();
+            EnemiesSpawner = new EnemiesSpawnerData();
         }
     }
 
@@ -43,5 +47,18 @@ namespace Asteroids.Scripts.SaveSystem
         public float AsteroidSpeed;
         public float PartOfAsteroidSpeed;
         public float BouncingTime;
+    }
+
+    public class EnemiesSpawnerData
+    {
+        public int MaxEnemyCount;
+        public float SpawnDelay;
+    }
+
+    public class ScreenResolutionSetter
+    {
+        public int Width;
+        public int Height;
+        public bool IsFullScreen;
     }
 }
