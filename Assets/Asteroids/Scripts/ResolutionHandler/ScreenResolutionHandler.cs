@@ -16,7 +16,7 @@ namespace Asteroids.Scripts.ResolutionHandler
         
         public void Initialize()
         {
-            Screen.SetResolution(400, 400, true);
+            Screen.SetResolution(_dataManager.ScreenWidth, _dataManager.ScreenHeight, _dataManager.IsFullScreen);
         }
     }
 }

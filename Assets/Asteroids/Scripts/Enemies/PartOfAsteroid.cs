@@ -2,12 +2,12 @@ using UnityEngine;
 
 namespace Asteroids.Scripts.Enemies
 {
-    public class Asteroid : Enemy
+    public class PartOfAsteroid : Enemy
     {
         private Vector2 _direction;
         private bool _inScreen;
 
-        public Asteroid(Vector2 position, float rotation, Vector2 direction, float speed)
+        public PartOfAsteroid(Vector2 position, float rotation, Vector2 direction, float speed)
         {
             Position = position;
             Rotation = rotation;
@@ -33,7 +33,7 @@ namespace Asteroids.Scripts.Enemies
                 }
             }
         }
-
+        
         public override void ChangeMovement(Vector2 direction, float time)
         {
             _direction = direction;
