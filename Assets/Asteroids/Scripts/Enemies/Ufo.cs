@@ -22,6 +22,7 @@ namespace Asteroids.Scripts.Enemies
             _normalMultiplier = 1f;
             _speedMultiplier = _normalMultiplier;
             _bounceMultiplier = 2f;
+            Type = EnemyType.Ufo;
         }
 
         public override void Update(float deltaTime)

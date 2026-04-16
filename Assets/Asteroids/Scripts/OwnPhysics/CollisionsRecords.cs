@@ -13,7 +13,6 @@ namespace Asteroids.Scripts.OwnPhysics
         public event Action<Asteroid> OnAsteroidDestroyed;
         public event Action OnPlayerCollideWithEnemy;
         public event Action<ShipMovement, Enemy> OnPlayerEnemyCollision;
-        public event Action GameEnd;
         
         public IEnumerable<Record> Values()
         {
@@ -42,13 +41,6 @@ namespace Asteroids.Scripts.OwnPhysics
                 OnPlayerCollideWithEnemy?.Invoke();
                 OnPlayerEnemyCollision?.Invoke(shipMovement, enemy);
             });
-
-            /*
-            yield return IfCollided((Ship ship, Enemy enemy) =>
-            {
-                GameEnd?.Invoke();
-            });
-            */
         }
 
         private Record IfCollided<T1, T2>(Action<T1, T2> action)

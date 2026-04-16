@@ -13,6 +13,7 @@ namespace Asteroids.Scripts.Enemies
             Rotation = rotation;
             Speed = speed;
             _direction = direction;
+            Type = EnemyType.Asteroid;
         }
         
         public override void Update(float deltaTime)

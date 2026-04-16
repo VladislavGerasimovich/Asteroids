@@ -7,7 +7,8 @@ namespace Asteroids.Scripts.SaveSystem
         public EnemiesData Enemies;
         public ScreenResolutionSetter ResolutionSetter;
         public EnemiesSpawnerData EnemiesSpawner;
-
+        public RewardsData RewardsData;
+        
         public SaveData()
         {
             PlayerShip = new PlayerShipData();
@@ -15,6 +16,7 @@ namespace Asteroids.Scripts.SaveSystem
             Enemies = new EnemiesData();
             ResolutionSetter = new ScreenResolutionSetter();
             EnemiesSpawner = new EnemiesSpawnerData();
+            RewardsData = new RewardsData();
         }
     }
 
@@ -60,5 +62,12 @@ namespace Asteroids.Scripts.SaveSystem
         public int Width;
         public int Height;
         public bool IsFullScreen;
+    }
+
+    public class RewardsData
+    {
+        public int UfoReward;
+        public int AsteroidReward;
+        public int PartOfAsteroidReward;
     }
 }
