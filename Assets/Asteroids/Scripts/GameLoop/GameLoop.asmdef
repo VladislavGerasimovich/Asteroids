@@ -1,11 +1,11 @@
 {
-    "name": "PlayerHealthSystem",
+    "name": "GameLoop",
     "rootNamespace": "",
     "references": [
-        "GUID:63f075d242b348c6a1876db07863d396",
-        "GUID:56345db4bf7c481c8434cb078ba7045b",
         "GUID:0d8beb7f090555447a6cf5ce9e54dbb4",
-        "GUID:636c6f8aeb1c47e09fc58a94bd531808"
+        "GUID:636c6f8aeb1c47e09fc58a94bd531808",
+        "GUID:560b04d1a97f54a4e82edc0cbbb69285",
+        "GUID:d9b374b0d931455cb6ede9abbd8750f6"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

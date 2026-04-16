@@ -36,6 +36,10 @@ namespace Asteroids.Scripts.SaveSystem
         public int ScreenWidth => _saveData.ResolutionSetter.Width;
         public int ScreenHeight => _saveData.ResolutionSetter.Height;
         public bool IsFullScreen => _saveData.ResolutionSetter.IsFullScreen;
+
+        public int UfoReward => _saveData.RewardsData.UfoReward;
+        public int AsteroidReward => _saveData.RewardsData.AsteroidReward;
+        public int PartOfAsteroidReward => _saveData.RewardsData.PartOfAsteroidReward;
         
         public DataManager()
         {
@@ -77,7 +81,7 @@ namespace Asteroids.Scripts.SaveSystem
             _saveData.PlayerShip.MaxSpeed = 0.0015f;
             _saveData.PlayerShip.MaxBounceSpeed = 0.0035f;
             _saveData.PlayerShip.SecondsToStop = 0.2f;
-            _saveData.PlayerShip.Health = 4;
+            _saveData.PlayerShip.Health = 3;
             
             _saveData.PlayerWeapon.LaserGunBullets = 7;
             _saveData.PlayerWeapon.LaserGunRollback = 5;
@@ -98,6 +102,10 @@ namespace Asteroids.Scripts.SaveSystem
             _saveData.ResolutionSetter.Width = 1000;
             _saveData.ResolutionSetter.Height = 1000;
             _saveData.ResolutionSetter.IsFullScreen = true;
+
+            _saveData.RewardsData.UfoReward = 150;
+            _saveData.RewardsData.AsteroidReward = 100;
+            _saveData.RewardsData.PartOfAsteroidReward = 50;
         }
     }
 }

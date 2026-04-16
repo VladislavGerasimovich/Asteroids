@@ -10,6 +10,8 @@ namespace Asteroids.Scripts.Infrastructure
         {
             BinderFactory.RegisterBinder<TextBinder>();
             BinderFactory.RegisterBinder<ViewSetterBinder<int>>();
+            BinderFactory.RegisterBinder<ViewSetterBinder<bool>>();
+            BinderFactory.RegisterBinder<ButtonBinder>();
         }
     }
 }
