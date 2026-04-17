@@ -5,13 +5,13 @@ using Object = UnityEngine.Object;
 
 public class PoolMono<T> where T : MonoBehaviour
 {
-    private List<T> pool;
-    
-    public IEnumerable<T> Pool => pool;
-    
     public T prefab { get; }
     public bool autoExpand { get; set; }
     public Transform container { get; }
+
+    private List<T> pool;
+
+    public IEnumerable<T> Pool => pool;
 
     public PoolMono(T prefab, int count)
     {

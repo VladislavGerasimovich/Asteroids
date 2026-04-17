@@ -30,6 +30,7 @@ namespace Asteroids.Scripts.Enemies
             if (!_hasBounced)
             {
                 _direction = (_player.Position - Position).normalized;
+                LookAt(_player.Position);
             }
             
             Position += _direction * Time.deltaTime * Speed * _speedMultiplier;

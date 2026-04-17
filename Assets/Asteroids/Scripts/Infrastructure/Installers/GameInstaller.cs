@@ -1,4 +1,3 @@
-using Asteroids.Scripts.FirebaseIntegration;
 using Asteroids.Scripts.GameLoop;
 using Asteroids.Scripts.GameTime;
 using Asteroids.Scripts.ResolutionHandler;
@@ -15,7 +14,6 @@ namespace Asteroids.Scripts.Infrastructure
         {
             Container.Bind<YandexSDK>().AsSingle();
             Container.BindInterfacesTo<ScreenResolutionHandler>().AsSingle();
-            Container.BindInterfacesAndSelfTo<FirebaseAnalyticsSetter>().AsSingle();
             Container.BindInterfacesTo<GameTimeHandler>().AsSingle();
             Container.BindInterfacesAndSelfTo<GameLoopHandler>().AsSingle();
             Container.BindInterfacesAndSelfTo<RewardHandler>().AsSingle();

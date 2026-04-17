@@ -9,7 +9,7 @@ namespace Asteroids.Scripts.Bullets
     {
         private readonly Timers<BulletEntity> _timers = new Timers<BulletEntity>();
 
-        private readonly List<BulletEntity> _entities = new List<BulletEntity>();
+        private List<BulletEntity> _entities = new List<BulletEntity>();
 
         public event Action<BulletEntity> Start;
         public event Action<BulletEntity> End;
@@ -34,6 +34,18 @@ namespace Asteroids.Scripts.Bullets
         {
             _entities.Remove(bulletEntity);
             End?.Invoke(bulletEntity);
+        }
+    }
+
+    public class BulletEntity
+    {
+        public readonly Bullet Entity;
+        public readonly Trajectory BulletTrajectory;
+
+        public BulletEntity(Bullet entity, Trajectory trajectory)
+        {
+            Entity = entity;
+            BulletTrajectory = trajectory;
         }
     }
 }

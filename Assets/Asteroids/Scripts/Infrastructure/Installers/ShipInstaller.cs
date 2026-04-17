@@ -35,6 +35,7 @@ namespace Asteroids.Scripts.Infrastructure
             Container.BindInterfacesAndSelfTo<InputBlocker>().AsSingle();
             Container.BindInterfacesAndSelfTo<PlayerSpawner>().FromInstance(playerSpawner).AsSingle();
             Container.BindInterfacesAndSelfTo<BulletsViewFactory>().FromInstance(bulletsViewFactory).AsSingle();
+
             Container.BindInterfacesAndSelfTo<PlayerHealth>().AsSingle();
             Container.BindInterfacesAndSelfTo<PlayerHealthsSpawner>().AsSingle();
             Container.Bind<PlayerHealthView>().FromInstance(playerHealthView).AsSingle();

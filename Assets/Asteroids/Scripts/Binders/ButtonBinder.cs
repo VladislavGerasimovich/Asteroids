@@ -13,17 +13,17 @@ namespace Asteroids.Scripts.Binders
         public ButtonBinder(Button view, Action model)
         {
             this.view = view;
-            modelAction = new UnityAction(model);
+            this.modelAction = new UnityAction(model);
         }
 
         void IBinder.Bind()
         {
-            view.onClick.AddListener(this.modelAction);
+            this.view.onClick.AddListener(this.modelAction);
         }
 
         void IBinder.Unbind()
         {
-            view.onClick.RemoveListener(this.modelAction);
+            this.view.onClick.RemoveListener(this.modelAction);
         }
     }
 }

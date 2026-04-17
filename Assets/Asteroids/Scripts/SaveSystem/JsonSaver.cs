@@ -10,9 +10,13 @@ namespace Asteroids.Scripts.SaveSystem
 
         public void Save(SaveData saveData)
         {
+            // Строка будет содержать сериализованный JSON объект
             string json = JsonConvert.SerializeObject(saveData);
+
+            // Строка содержит путь, по которому будет храниться файл
             string path = Path.Combine(Application.persistentDataPath, _filename);
 
+            // Создаем новый файл и через метод Write записываем сериализованный JSON объект
             using (StreamWriter writer = new(path))
             {
                 writer.Write(json);
@@ -23,6 +27,7 @@ namespace Asteroids.Scripts.SaveSystem
         {
             string loadFilename = GetSaveFilename();
 
+            // only run if we find the filename on disk
             if (File.Exists(loadFilename))
             {
                 string path = Path.Combine(Application.persistentDataPath, _filename);

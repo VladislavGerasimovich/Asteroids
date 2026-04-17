@@ -20,18 +20,18 @@ namespace Asteroids.Scripts.Enemies
         private List<EnemyView> _enemyViews;
         private PhysicsRouter _physicsRouter;
         private CollisionsRecords _collisionsRecords;
-        private Enemy _enemyToRemove;
-        private EnemyView _enemyViewToRemove;
-        private DataManager _dataManager;
-        private Vector2 _pushDirection;
-        private Vector2 _circlePositionOffset;
         private int _minAsteroidPartsCount;
         private int _maxAsteroidPartsCount;
         private int _asteroidPartsCount;
-        private int _randomEnemyIndex;
+        private Vector2 _pushDirection;
+        private Enemy _enemyToRemove;
+        private EnemyView _enemyViewToRemove;
+        private DataManager _dataManager;
+        private Vector2 _circlePositionOffset;
         private float _positionMinOffset;
         private float _positionMaxOffset;
         private float _accumulatedTime;
+        private int _randomEnemyIndex;
 
         public EnemiesSpawner(
             Camera camera,

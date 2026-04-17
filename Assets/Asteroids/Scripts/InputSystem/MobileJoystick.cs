@@ -10,16 +10,17 @@ namespace Asteroids.Scripts.PlayerShip
         [SerializeField] private int dragMovementDistance = 30;
         [SerializeField] private int dragOffsetDistance = 100;
         
-        private RectTransform _joystickTransform;
+        private RectTransform joystickTransform;
         private Vector2 _tempAxis;
         
         public event Action<Vector2> OnMove;
 
         public Vector2 Axis => _tempAxis;
 
+
         private void Awake()
         {
-            _joystickTransform = (RectTransform)transform;
+            joystickTransform = (RectTransform)transform;
         }
 
         public void OnPointerDown(PointerEventData eventData)
@@ -30,17 +31,17 @@ namespace Asteroids.Scripts.PlayerShip
         public void OnDrag(PointerEventData eventData)
         {
             RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                _joystickTransform,
+                joystickTransform,
                 eventData.position,
                 null,
                 out _tempAxis);
             _tempAxis = Vector2.ClampMagnitude(_tempAxis, dragOffsetDistance) / dragOffsetDistance;
-            _joystickTransform.anchoredPosition = _tempAxis * dragMovementDistance;
+            joystickTransform.anchoredPosition = _tempAxis * dragMovementDistance;
         }
         
         public void OnPointerUp(PointerEventData eventData)
         {
-            _joystickTransform.anchoredPosition = Vector2.zero;
+            joystickTransform.anchoredPosition = Vector2.zero;
             _tempAxis = Vector2.zero;
             OnMove?.Invoke(Vector2.zero);
         }
