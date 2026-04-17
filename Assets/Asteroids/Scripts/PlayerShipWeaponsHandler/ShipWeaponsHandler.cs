@@ -13,6 +13,7 @@ namespace Asteroids.Scripts.PlayerShip
 {
     public class ShipWeaponsHandler : IInitializable, ITickable, IDisposable
     {
+        private readonly Dictionary<BulletEntity, BulletView> _views;
         private DefaultGun _defaultGun;
         private LaserGun _laserGun;
         private IGun _firstSlotGun;
@@ -20,7 +21,6 @@ namespace Asteroids.Scripts.PlayerShip
         private BulletsViewFactory _bulletsViewFactory;
         private BulletsSimulation _bulletsSimulation;
         private ShipMovement _shipMovement;
-        private readonly Dictionary<BulletEntity, BulletView> _views;
         private LaserGunRollback _laserGunRollback;
         private PhysicsRouter _physicsRouter;
         private CollisionsRecords _collisionsRecords;

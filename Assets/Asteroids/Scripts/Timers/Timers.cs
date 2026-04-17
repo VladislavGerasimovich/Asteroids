@@ -6,7 +6,7 @@ namespace Asteroids.Scripts.Timers
 {
     public class Timers<T>
     {
-        private List<Timer> _timers = new List<Timer>();
+        private readonly List<Timer> _timers = new List<Timer>();
 
         public void Start(T context, float time, Action<T> onEnd)
         {
