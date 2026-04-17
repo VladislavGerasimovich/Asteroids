@@ -31,11 +31,6 @@ namespace Asteroids.Scripts.OwnPhysics
                 OnAsteroidDestroyed?.Invoke(asteroid);
             });
             
-            yield return IfCollided((Bullet bullet, Asteroid asteroid) =>
-            {
-                OnAsteroidDestroyed?.Invoke(asteroid);
-            });
-            
             yield return IfCollided((ShipMovement shipMovement, Enemy enemy) =>
             {
                 OnPlayerCollideWithEnemy?.Invoke();
