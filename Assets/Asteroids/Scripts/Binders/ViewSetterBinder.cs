@@ -18,8 +18,8 @@ namespace Asteroids.Scripts.Binders
 
         public void Bind()
         {
-            this.OnNext(this.property.Value);
-            _handle = this.property.Subscribe(this);
+            OnNext(property.Value);
+            _handle = property.Subscribe(this);
         }
 
         public void Unbind()
@@ -30,7 +30,7 @@ namespace Asteroids.Scripts.Binders
 
         public void OnNext(T value)
         {
-            this.view.Invoke(value);
+            view.Invoke(value);
         }
 
         public void OnCompleted()

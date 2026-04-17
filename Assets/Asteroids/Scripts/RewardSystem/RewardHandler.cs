@@ -12,9 +12,9 @@ namespace Asteroids.Scripts.RewardSystem
         private Dictionary<EnemyType, int> _enemyRewards;
         private CollisionsRecords _collisionsRecords;
 
-        public int RewardCount { get; private set; }
-
         public event Action OnCountChanged;
+        
+        public int RewardCount { get; private set; }
         
         public RewardHandler(CollisionsRecords collisionsRecords, DataManager dataManager)
         {
