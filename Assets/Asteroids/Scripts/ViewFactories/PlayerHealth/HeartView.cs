@@ -10,7 +10,7 @@ namespace Asteroids.Scripts.ViewFactories.PlayerHealth
         [SerializeField] private float fillTime;
 
         private float _accumulatedTime;
-        
+
         public bool IsActive { get; private set; }
 
         public void Init()
@@ -22,7 +22,7 @@ namespace Asteroids.Scripts.ViewFactories.PlayerHealth
         {
             Fill();
         }
-        
+
         public void Hide()
         {
             Empty();
@@ -31,7 +31,7 @@ namespace Asteroids.Scripts.ViewFactories.PlayerHealth
         private async UniTask Fill()
         {
             _accumulatedTime = 0;
-            
+
             while (_accumulatedTime <= fillTime)
             {
                 await UniTask.Yield(PlayerLoopTiming.Update);
@@ -41,18 +41,22 @@ namespace Asteroids.Scripts.ViewFactories.PlayerHealth
 
             IsActive = true;
         }
-        
+
         private async UniTask Empty()
         {
             _accumulatedTime = fillTime;
-            
+
             while (_accumulatedTime >= 0)
             {
                 await UniTask.Yield(PlayerLoopTiming.Update);
                 _accumulatedTime -= Time.deltaTime;
-                icon.fillAmount = _accumulatedTime / fillTime;
+
+                if (icon != null)
+                {
+                    icon.fillAmount = _accumulatedTime / fillTime;
+                }
             }
-            
+
             IsActive = false;
         }
     }

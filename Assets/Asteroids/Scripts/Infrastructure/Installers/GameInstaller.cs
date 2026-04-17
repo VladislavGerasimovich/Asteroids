@@ -12,6 +12,7 @@ namespace Asteroids.Scripts.Infrastructure
     {
         public override void InstallBindings()
         {
+            Container.Bind<YandexSDK>().AsSingle();
             Container.BindInterfacesTo<ScreenResolutionHandler>().AsSingle();
             Container.BindInterfacesTo<GameTimeHandler>().AsSingle();
             Container.BindInterfacesAndSelfTo<GameLoopHandler>().AsSingle();

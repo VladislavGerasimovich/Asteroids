@@ -13,9 +13,11 @@ namespace Asteroids.Scripts.GameLoop
         public ReactiveProperty<bool> IsPlayerDied;
         
         private SignalBus _signalBus;
+        private YandexSDK _yandexSDK;
 
-        public GameLoopHandler(SignalBus signalBus)
+        public GameLoopHandler(SignalBus signalBus, YandexSDK yandexSDK)
         {
+            _yandexSDK = yandexSDK;
             _signalBus = signalBus;
             IsPlayerDied = new ReactiveProperty<bool>();
         }
@@ -32,6 +34,7 @@ namespace Asteroids.Scripts.GameLoop
 
         private void OnPlayerDied()
         {
+            _yandexSDK.ShowInterstitalAd();
             IsPlayerDied.Value = true;
         }
 
