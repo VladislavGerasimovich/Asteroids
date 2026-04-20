@@ -22,6 +22,8 @@ namespace Asteroids.Scripts.Infrastructure
         {
             Container.Bind<Camera>().FromInstance(mainCamera).AsSingle();
             Container.Bind<ShipMovement>().AsSingle();
+            Container.Bind<InertMovement>().AsSingle();
+            Container.Bind<InputFactory>().AsSingle();
             Container.Bind<MobileInputView>().FromInstance(mobileInputView).AsSingle();
             Container.BindInterfacesTo<PlayerShipEffectsHandler>().AsSingle();
             Container.BindInterfacesTo<ShipInputRouter>().AsSingle();

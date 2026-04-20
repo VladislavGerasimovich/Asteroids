@@ -1,4 +1,3 @@
-using Asteroids.Scripts.SaveSystem;
 using Asteroids.Scripts.ViewModels;
 using UnityEngine;
 using Zenject;
@@ -23,8 +22,9 @@ namespace Asteroids.Scripts.PlayerShip
             MobileInputView mobileInputView,
             InputBlocker inputBlocker,
             PostCollisionMovement postCollisionMovement,
+            InputFactory inputFactory,
             InertMovementViewModel inertMovementViewModel,
-            DataManager dataManager)
+            InertMovement inertMovement)
         {
             _inertMovementViewModel = inertMovementViewModel;
             _playerSpawner = playerSpawner;
@@ -32,8 +32,7 @@ namespace Asteroids.Scripts.PlayerShip
             _shipWeaponsHandler = shipWeaponsHandler;
             _inputBlocker = inputBlocker;
             _postCollisionMovement = postCollisionMovement;
-            _inertMovement = new InertMovement(dataManager);
-
+            _inertMovement = inertMovement;
             _inertMovementViewModel.Init(_inertMovement);
             
             if (Application.isEditor)
@@ -46,20 +45,20 @@ namespace Asteroids.Scripts.PlayerShip
                     if (!string.IsNullOrEmpty(joysticks[i]))
                     {
                         hasGamepad = true;
-                        _inputService = new GamepadInputService();
+                        _inputService = inputFactory.GetGamepadInputService();
                     }
                 }
 
                 if (hasGamepad == false)
                 {
-                    _inputService = new StandaloneInputService();
+                    _inputService = inputFactory.GetStandaloneInputService();
                 }
 
                 mobileInputView.Hide();
             }
             else
             {
-                _inputService = new MobileJoystickInputService(mobileInputView);
+                _inputService = inputFactory.GetMobileJoystickInputService(mobileInputView);
                 mobileInputView.Show();
             }
         }
