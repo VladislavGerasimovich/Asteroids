@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Asteroids.Scripts.PlayerShip
+namespace Asteroids.Scripts.InputSystem
 {
     public class TrackableButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {

@@ -1,3 +1,4 @@
+using Asteroids.Scripts.ObjectPool;
 using UnityEngine;
 using Zenject;
 
@@ -13,7 +14,7 @@ namespace Asteroids.Scripts.ViewFactories.Effects
         {
             GameObject invulnerabilityEffectContainer = new GameObject("InvulnerabilityEffectContainer");
             _invulnerabilityEffectsPool = new PoolMono<EffectView>(InvulnerabilityEffectView, 5, invulnerabilityEffectContainer.transform);
-            _invulnerabilityEffectsPool.autoExpand = true;
+            _invulnerabilityEffectsPool.AutoExpand = true;
         }
         
         public EffectView GetTemplate(Effects effect)

@@ -3,6 +3,7 @@ using Asteroids.Scripts.GameLoop;
 using Asteroids.Scripts.GameTime;
 using Asteroids.Scripts.ResolutionHandler;
 using Asteroids.Scripts.RewardSystem;
+using Asteroids.Scripts.SDK;
 using Asteroids.Scripts.Signals;
 using Asteroids.Scripts.ViewModels;
 using Zenject;

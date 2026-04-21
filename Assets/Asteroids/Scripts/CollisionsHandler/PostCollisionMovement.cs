@@ -1,10 +1,11 @@
 using System;
 using Asteroids.Scripts.Enemies;
 using Asteroids.Scripts.OwnPhysics;
+using Asteroids.Scripts.PlayerShipMovement;
 using UnityEngine;
 using Zenject;
 
-namespace Asteroids.Scripts.PlayerShip
+namespace Asteroids.Scripts.CollisionsHandler
 {
     public class PostCollisionMovement : IInitializable, IDisposable
     {

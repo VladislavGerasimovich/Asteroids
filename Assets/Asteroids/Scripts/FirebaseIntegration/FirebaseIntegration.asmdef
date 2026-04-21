@@ -1,3 +1,4 @@
 {
-	"name": "FirebaseIntegration"
+	"name": "FirebaseIntegration",
+	"references":[ "GUID:0d8beb7f090555447a6cf5ce9e54dbb4", "GUID:636c6f8aeb1c47e09fc58a94bd531808", "GUID:17602a6d3f3e44329b14572871d5a09a" ]
 }

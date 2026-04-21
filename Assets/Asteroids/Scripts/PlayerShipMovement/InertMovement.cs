@@ -1,7 +1,7 @@
 using Asteroids.Scripts.SaveSystem;
 using UnityEngine;
 
-namespace Asteroids.Scripts.PlayerShip
+namespace Asteroids.Scripts.PlayerShipMovement
 {
     public class InertMovement
     {
@@ -14,13 +14,12 @@ namespace Asteroids.Scripts.PlayerShip
 
         public Vector2 Acceleration { get; private set; }
 
-        public InertMovement(DataManager dataManager)
+        public InertMovement(SaveDataRepository saveDataRepository)
         {
-            dataManager.LoadProgressOrInitNew();
-            _unitsPerSecond = dataManager.UnitsPerSecond;
-            _maxSpeed = dataManager.MaxSpeed;
-            _maxBounceSpeed = dataManager.MaxBounceSpeed;
-            _secondsToStop = dataManager.SecondsToStop;
+            _unitsPerSecond = saveDataRepository.UnitsPerSecond;
+            _maxSpeed = saveDataRepository.MaxSpeed;
+            _maxBounceSpeed = saveDataRepository.MaxBounceSpeed;
+            _secondsToStop = saveDataRepository.SecondsToStop;
         }
 
         public void Accelerate(Vector2 forward)

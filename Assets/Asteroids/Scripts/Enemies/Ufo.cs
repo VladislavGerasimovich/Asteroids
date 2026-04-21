@@ -32,23 +32,13 @@ namespace Asteroids.Scripts.Enemies
                 _direction = (_player.Position - Position).normalized;
             }
             
-            Position += _direction * Time.deltaTime * Speed * _speedMultiplier;
+            Position += _direction * deltaTime * Speed * _speedMultiplier;
         }
         
         public override void ChangeMovement(Vector2 direction, float time)
         {
             _direction = direction;
             ChangeSpeed(time);
-        }
-        
-        private void LookAt(Vector2 point)
-        {
-            Rotate(Vector2.SignedAngle(Quaternion.Euler(0, 0, Rotation) * Vector3.up, (point - Position)));
-        }
-
-        private void Rotate(float delta)
-        {
-            Rotation = Mathf.Repeat(Rotation + delta, 360);
         }
 
         private async void ChangeSpeed(float time)

@@ -16,16 +16,15 @@ namespace Asteroids.Scripts.RewardSystem
         
         public int RewardCount { get; private set; }
         
-        public RewardHandler(CollisionsRecords collisionsRecords, DataManager dataManager)
+        public RewardHandler(CollisionsRecords collisionsRecords, SaveDataRepository saveDataRepository)
         {
             _collisionsRecords = collisionsRecords;
-            dataManager.LoadProgressOrInitNew();
             
             _enemyRewards = new Dictionary<EnemyType, int>()
             {
-                { EnemyType.Ufo, dataManager.UfoReward },
-                { EnemyType.Asteroid, dataManager.AsteroidReward },
-                { EnemyType.PartOfAsteroid, dataManager.PartOfAsteroidReward },
+                { EnemyType.Ufo, saveDataRepository.UfoReward },
+                { EnemyType.Asteroid, saveDataRepository.AsteroidReward },
+                { EnemyType.PartOfAsteroid, saveDataRepository.PartOfAsteroidReward },
             };
         }
 

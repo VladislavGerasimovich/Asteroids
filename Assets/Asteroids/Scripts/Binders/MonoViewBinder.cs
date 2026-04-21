@@ -8,7 +8,7 @@ using UnityEngine;
 using Zenject;
 using Object = UnityEngine.Object;
 
-namespace SampleGame
+namespace Asteroids.Scripts.Binders
 {
     public sealed class MonoViewBinder : MonoBehaviour
     {

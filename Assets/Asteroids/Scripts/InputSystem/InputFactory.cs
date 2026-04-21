@@ -1,4 +1,4 @@
-namespace Asteroids.Scripts.PlayerShip
+namespace Asteroids.Scripts.InputSystem
 {
     public class InputFactory
     {

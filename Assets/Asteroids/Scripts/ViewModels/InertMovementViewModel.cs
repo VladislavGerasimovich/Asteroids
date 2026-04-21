@@ -1,5 +1,5 @@
 using System;
-using Asteroids.Scripts.PlayerShip;
+using Asteroids.Scripts.PlayerShipMovement;
 using MVVM;
 using UniRx;
 using Zenject;

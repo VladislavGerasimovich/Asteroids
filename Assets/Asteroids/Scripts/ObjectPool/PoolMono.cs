@@ -3,87 +3,90 @@ using System.Collections.Generic;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-public class PoolMono<T> where T : MonoBehaviour
+namespace Asteroids.Scripts.ObjectPool
 {
-    private List<T> pool;
-    
-    public IEnumerable<T> Pool => pool;
-    
-    public T prefab { get; }
-    public bool autoExpand { get; set; }
-    public Transform container { get; }
-
-    public PoolMono(T prefab, int count)
+    public class PoolMono<T> where T : MonoBehaviour
     {
-        this.prefab = prefab;
-        this.container = null;
-        this.CreatePool(count);
-    }
+        private List<T> _pool;
 
-    public PoolMono(T prefab, int count, Transform container)
-    {
-        this.prefab = prefab;
-        this.container = container;
-        this.CreatePool(count);
-    }
+        public IEnumerable<T> Pool => _pool;
 
-    public T GetFreeElement()
-    {
-        if (this.HasFreeElement(out var element))
-            return element;
+        public T Prefab { get; }
+        public bool AutoExpand { get; set; }
+        public Transform Container { get; }
 
-        if (this.autoExpand)
-            return this.CreateObject(true);
-
-        throw new Exception($"There is no free elements in pool of type {typeof(T)}");
-    }
-
-    public void ResetElements()
-    {
-        foreach (var item in this.pool)
+        public PoolMono(T prefab, int count)
         {
-            item.gameObject.SetActive(false);
+            this.Prefab = prefab;
+            this.Container = null;
+            this.CreatePool(count);
         }
-    }
 
-    public void ResetElement(T element)
-    {
-        foreach (var item in this.pool)
+        public PoolMono(T prefab, int count, Transform container)
         {
-            if (item == element)
+            this.Prefab = prefab;
+            this.Container = container;
+            this.CreatePool(count);
+        }
+
+        public T GetFreeElement()
+        {
+            if (this.HasFreeElement(out var element))
+                return element;
+
+            if (this.AutoExpand)
+                return this.CreateObject(true);
+
+            throw new Exception($"There is no free elements in pool of type {typeof(T)}");
+        }
+
+        public void ResetElements()
+        {
+            foreach (var item in this._pool)
             {
                 item.gameObject.SetActive(false);
             }
         }
-    }
 
-    private void CreatePool(int count)
-    {
-        this.pool = new List<T>();
-        for (int i = 0; i < count; i++)
-            this.CreateObject();
-    }
-
-    private T CreateObject(bool isActiveByDefault = false)
-    {
-        var createdObject = Object.Instantiate(this.prefab, this.container);
-        createdObject.gameObject.SetActive(isActiveByDefault);
-        this.pool.Add(createdObject);
-        return createdObject;
-    }
-
-    private bool HasFreeElement(out T element)
-    {
-        foreach (var mono in pool)
+        public void ResetElement(T element)
         {
-            if (!mono.gameObject.activeInHierarchy)
+            foreach (var item in this._pool)
             {
-                element = mono;
-                return true;
+                if (item == element)
+                {
+                    item.gameObject.SetActive(false);
+                }
             }
         }
 
-        element = null;
-        return false;
+        private void CreatePool(int count)
+        {
+            this._pool = new List<T>();
+            for (int i = 0; i < count; i++)
+                this.CreateObject();
+        }
+
+        private T CreateObject(bool isActiveByDefault = false)
+        {
+            var createdObject = Object.Instantiate(this.Prefab, this.Container);
+            createdObject.gameObject.SetActive(isActiveByDefault);
+            this._pool.Add(createdObject);
+            return createdObject;
+        }
+
+        private bool HasFreeElement(out T element)
+        {
+            foreach (var mono in _pool)
+            {
+                if (!mono.gameObject.activeInHierarchy)
+                {
+                    element = mono;
+                    return true;
+                }
+            }
+
+            element = null;
+            return false;
+        }
     }
 }

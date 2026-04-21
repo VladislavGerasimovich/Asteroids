@@ -1,8 +1,9 @@
 using System;
+using Asteroids.Scripts.PlayerShip;
 using Asteroids.Scripts.SaveSystem;
 using UnityEngine;
 
-namespace Asteroids.Scripts.PlayerShip
+namespace Asteroids.Scripts.PlayerShipMovement
 {
     public class ShipMovement : TransformData
     {
@@ -10,11 +11,10 @@ namespace Asteroids.Scripts.PlayerShip
         
         public Vector2 Forward => Quaternion.Euler(0, 0, Rotation) * Vector3.up;
         
-        public ShipMovement(DataManager dataManager)
+        public ShipMovement(SaveDataRepository saveDataRepository)
         {
-            dataManager.LoadProgressOrInitNew();
-            Position = dataManager.PlayerPosition;
-            Rotation = dataManager.PlayerRotation;
+            Position = saveDataRepository.PlayerPosition;
+            Rotation = saveDataRepository.PlayerRotation;
         }
         
         public void MoveLooped(Vector2 delta)

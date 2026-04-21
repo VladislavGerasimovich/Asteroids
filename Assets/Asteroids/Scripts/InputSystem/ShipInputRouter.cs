@@ -1,8 +1,12 @@
+using Asteroids.Scripts.CollisionsHandler;
+using Asteroids.Scripts.PlayerShipMovement;
+using Asteroids.Scripts.PlayerShipWeaponsHandler;
+using Asteroids.Scripts.Spawners;
 using Asteroids.Scripts.ViewModels;
 using UnityEngine;
 using Zenject;
 
-namespace Asteroids.Scripts.PlayerShip
+namespace Asteroids.Scripts.InputSystem
 {
     public class ShipInputRouter : ITickable
     {
@@ -10,7 +14,7 @@ namespace Asteroids.Scripts.PlayerShip
         private PlayerSpawner _playerSpawner;
         private InertMovement _inertMovement;
         private IInputService _inputService;
-        private ShipWeaponsHandler _shipWeaponsHandler;
+        private WeaponsSystem _weaponsSystem;
         private InputBlocker _inputBlocker;
         private PostCollisionMovement _postCollisionMovement;
         private InertMovementViewModel _inertMovementViewModel;
@@ -18,7 +22,7 @@ namespace Asteroids.Scripts.PlayerShip
         public ShipInputRouter(
             PlayerSpawner playerSpawner,
             ShipMovement shipMovement,
-            ShipWeaponsHandler shipWeaponsHandler,
+            WeaponsSystem weaponsSystem,
             MobileInputView mobileInputView,
             InputBlocker inputBlocker,
             PostCollisionMovement postCollisionMovement,
@@ -29,7 +33,7 @@ namespace Asteroids.Scripts.PlayerShip
             _inertMovementViewModel = inertMovementViewModel;
             _playerSpawner = playerSpawner;
             _shipMovement = shipMovement;
-            _shipWeaponsHandler = shipWeaponsHandler;
+            _weaponsSystem = weaponsSystem;
             _inputBlocker = inputBlocker;
             _postCollisionMovement = postCollisionMovement;
             _inertMovement = inertMovement;
@@ -91,11 +95,11 @@ namespace Asteroids.Scripts.PlayerShip
             {
                 if (_inputService.IsFirstGunSlotButtonDown())
                 {
-                    _shipWeaponsHandler.OnFirstSlotGunButtonClicked();
+                    _weaponsSystem.OnFirstSlotGunButtonClicked();
                 }
                 else if (_inputService.IsSecondGunSlotButtonDown())
                 {
-                    _shipWeaponsHandler.OnSecondSlotGunButtonClicked();
+                    _weaponsSystem.OnSecondSlotGunButtonClicked();
                 }
             }
 

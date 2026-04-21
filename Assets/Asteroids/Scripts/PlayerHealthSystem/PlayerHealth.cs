@@ -17,13 +17,12 @@ namespace Asteroids.Scripts.PlayerHealthSystem
 
         public PlayerHealth(
             CollisionsRecords collisionsRecords,
-            DataManager dataManager,
+            SaveDataRepository saveDataRepository,
             SignalBus signalBus)
         {
             _signalBus = signalBus;
             _collisionsRecords = collisionsRecords;
-            dataManager.LoadProgressOrInitNew();
-            Health = dataManager.PlayerShipHealth;
+            Health = saveDataRepository.PlayerShipHealth;
         }
         
         public void Initialize()

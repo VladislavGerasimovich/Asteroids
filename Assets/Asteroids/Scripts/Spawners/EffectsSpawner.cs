@@ -4,7 +4,7 @@ using UnityEngine;
 using Asteroids.Scripts.Timers;
 using Zenject;
 
-namespace Asteroids.Scripts.Enemies
+namespace Asteroids.Scripts.Spawners
 {
     public class EffectsSpawner : ITickable
     {

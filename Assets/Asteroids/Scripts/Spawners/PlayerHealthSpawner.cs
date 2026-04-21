@@ -3,14 +3,14 @@ using Asteroids.Scripts.ViewFactories.PlayerHealth;
 using MVVM;
 using Zenject;
 
-namespace Asteroids.Scripts.Enemies
+namespace Asteroids.Scripts.Spawners
 {
-    public class PlayerHealthsSpawner : IInitializable
+    public class PlayerHealthSpawner : IInitializable
     {
         private PlayerHealthView _playerHealthView;
         private PlayerHealth _playerHealth;
 
-        public PlayerHealthsSpawner(PlayerHealthView playerHealthView, PlayerHealth playerHealth)
+        public PlayerHealthSpawner(PlayerHealthView playerHealthView, PlayerHealth playerHealth)
         {
             _playerHealth = playerHealth;
             _playerHealthView = playerHealthView;
@@ -24,7 +24,10 @@ namespace Asteroids.Scripts.Enemies
         [Method("OnHealthReduced")]
         public void ReduceHeart(int count)
         {
-            _playerHealthView.HideHeart();
+            if (count >= 0)
+            {
+                _playerHealthView.HideHeart();
+            }
         }
     }
 }

@@ -1,31 +1,51 @@
 using Asteroids.Scripts.OwnPhysics;
-using Asteroids.Scripts.PlayerShip;
-using Asteroids.Scripts.ViewFactories.Player;
+using Asteroids.Scripts.PlayerShipMovement;
+using Asteroids.Scripts.SaveSystem;
+using Asteroids.Scripts.ViewFactories.PlayerShip;
 using UnityEngine;
 using Zenject;
 
-public class PlayerSpawner : MonoBehaviour, IInitializable
+namespace Asteroids.Scripts.Spawners
 {
-    [SerializeField] private PlayerShipView _playerShipView;
-
-    public PlayerShipView CurrentPlayerShipView { get; private set; }
-
-    [Inject]
-    private PhysicsRouter _physicsRouter;
-    [Inject]
-    private ShipMovement _shipMovement;
-    [Inject]
-    private CollisionsRecords _collisionsRecords;
-    
-    public void Initialize()
+    public class PlayerSpawner : MonoBehaviour, IInitializable
     {
-        GameObject playerContainer = new GameObject("PlayerContainer");
-        CurrentPlayerShipView = Instantiate(
-            _playerShipView.gameObject,
-            new Vector3(0.5f, 0.5f),
-            Quaternion.identity,
-            playerContainer.transform).GetComponent<PlayerShipView>();
-        PlayerPhysicsEventsBroadcaster playerPhysicsEventsBroadcaster = CurrentPlayerShipView.GetComponent<PlayerPhysicsEventsBroadcaster>();
-        playerPhysicsEventsBroadcaster.Init(_physicsRouter, _shipMovement, _collisionsRecords);
+        [SerializeField] private PlayerShipView _playerShipView;
+
+        public PlayerShipView CurrentPlayerShipView { get; private set; }
+
+        private PhysicsRouter _physicsRouter;
+        private ShipMovement _shipMovement;
+        private CollisionsRecords _collisionsRecords;
+        private SaveDataRepository _saveDataRepository;
+        private Camera _camera;
+
+        [Inject]
+        private void Construct(
+            PhysicsRouter physicsRouter,
+            ShipMovement shipMovement,
+            CollisionsRecords collisionsRecords,
+            SaveDataRepository saveDataRepository,
+            Camera camera)
+        {
+            _physicsRouter = physicsRouter;
+            _shipMovement = shipMovement;
+            _collisionsRecords = collisionsRecords;
+            _saveDataRepository = saveDataRepository;
+            _camera = camera;
+        }
+
+        public void Initialize()
+        {
+            GameObject playerContainer = new GameObject("PlayerContainer");
+            CurrentPlayerShipView = Instantiate(
+                _playerShipView.gameObject,
+                new Vector3(_saveDataRepository.PlayerPosition.x, _saveDataRepository.PlayerPosition.y),
+                Quaternion.identity,
+                playerContainer.transform).GetComponent<PlayerShipView>();
+            CurrentPlayerShipView.Init(_camera);
+            PlayerPhysicsEventsBroadcaster playerPhysicsEventsBroadcaster =
+                CurrentPlayerShipView.GetComponent<PlayerPhysicsEventsBroadcaster>();
+            playerPhysicsEventsBroadcaster.Init(_physicsRouter, _shipMovement, _collisionsRecords, _saveDataRepository);
+        }
     }
 }

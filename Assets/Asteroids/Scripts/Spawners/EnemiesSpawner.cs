@@ -1,15 +1,15 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using Asteroids.Scripts.Enemies;
 using Asteroids.Scripts.OwnPhysics;
-using Asteroids.Scripts.PlayerShip;
+using Asteroids.Scripts.PlayerShipMovement;
 using Asteroids.Scripts.SaveSystem;
 using Asteroids.Scripts.ViewFactories.Enemies;
 using UnityEngine;
 using Zenject;
 using Random = UnityEngine.Random;
 
-namespace Asteroids.Scripts.Enemies
+namespace Asteroids.Scripts.Spawners
 {
     public class EnemiesSpawner : IInitializable, ITickable, IDisposable
     {
@@ -17,12 +17,13 @@ namespace Asteroids.Scripts.Enemies
         private Camera _camera;
         private ShipMovement _playerShipMovement;
         private List<Enemy> _enemies;
+        private List<Enemy> _enemiesBuffer;
         private List<EnemyView> _enemyViews;
         private PhysicsRouter _physicsRouter;
         private CollisionsRecords _collisionsRecords;
         private Enemy _enemyToRemove;
         private EnemyView _enemyViewToRemove;
-        private DataManager _dataManager;
+        private SaveDataRepository _saveDataRepository;
         private Vector2 _pushDirection;
         private Vector2 _circlePositionOffset;
         private int _minAsteroidPartsCount;
@@ -39,23 +40,23 @@ namespace Asteroids.Scripts.Enemies
             ShipMovement playerShipMovement,
             PhysicsRouter physicsRouter,
             CollisionsRecords collisionsRecords,
-            DataManager dataManager)
+            SaveDataRepository saveDataRepository)
         {
-            _dataManager = dataManager;
-            _dataManager.LoadProgressOrInitNew();
+            _saveDataRepository = saveDataRepository;
             _camera = camera;
             _enemiesViewFactory = enemiesViewFactory;
             _playerShipMovement = playerShipMovement;
             _physicsRouter = physicsRouter;
             _collisionsRecords = collisionsRecords;
             _enemies = new List<Enemy>();
+            _enemiesBuffer = new List<Enemy>();
             _enemyViews = new List<EnemyView>();
             _minAsteroidPartsCount = 1;
             _maxAsteroidPartsCount = 4;
             _circlePositionOffset = new Vector2(0.5f, 0.5f);
             _positionMinOffset = 0.1f;
             _positionMaxOffset = 0.9f;
-            _accumulatedTime = _dataManager.SpawnDelay;
+            _accumulatedTime = _saveDataRepository.SpawnDelay;
         }
 
         public void Initialize()
@@ -68,8 +69,10 @@ namespace Asteroids.Scripts.Enemies
         public void Tick()
         {
             CreateEnemies();
+            _enemiesBuffer.Clear();
+            _enemiesBuffer.AddRange(_enemies);
             
-            foreach (Enemy enemy in _enemies.ToList())
+            foreach (Enemy enemy in _enemiesBuffer)
             {
                 enemy.Update(Time.deltaTime);
             }
@@ -101,9 +104,9 @@ namespace Asteroids.Scripts.Enemies
 
         private void CreateEnemies()
         {
-            if (_enemies.Count < _dataManager.MaxEnemyCount)
+            if (_enemies.Count < _saveDataRepository.MaxEnemyCount)
             {
-                if (_accumulatedTime >= _dataManager.SpawnDelay)
+                if (_accumulatedTime >= _saveDataRepository.SpawnDelay)
                 {
                     CreateRandomEnemy();
                     _accumulatedTime = 0f;
@@ -133,18 +136,18 @@ namespace Asteroids.Scripts.Enemies
 
         private Ufo CreateUfo()
         {
-            return new Ufo(GetRandomPositionInsideUnitCircle(), 0, _dataManager.UfoSpeed, _playerShipMovement);
+            return new Ufo(GetRandomPositionInsideUnitCircle(), 0, _saveDataRepository.UfoSpeed, _playerShipMovement);
         }
         
         private Asteroid CreateAsteroid()
         {
             Vector2 randomPosition = GetRandomPositionInsideUnitCircle();
-            return new Asteroid(randomPosition, 0, GetDirectionThroughtScreen(randomPosition), _dataManager.AsteroidSpeed);
+            return new Asteroid(randomPosition, 0, GetDirectionThroughScreen(randomPosition), _saveDataRepository.AsteroidSpeed);
         }
         
         private PartOfAsteroid CreatePartOfAsteroid(Asteroid asteroid)
         {
-            return new PartOfAsteroid(asteroid.Position, 0, GetDirectionThroughtScreen(asteroid.Position), _dataManager.PartOfAsteroidSpeed);
+            return new PartOfAsteroid(asteroid.Position, 0, GetDirectionThroughScreen(asteroid.Position), _saveDataRepository.PartOfAsteroidSpeed);
         }
         
         private Vector2 GetRandomPositionInsideUnitCircle()
@@ -152,7 +155,7 @@ namespace Asteroids.Scripts.Enemies
             return Random.insideUnitCircle.normalized + _circlePositionOffset;
         }
         
-        private Vector2 GetDirectionThroughtScreen(Vector2 position)
+        private Vector2 GetDirectionThroughScreen(Vector2 position)
         {
             return (new Vector2(Random.Range(_positionMinOffset, _positionMaxOffset), Random.Range(_positionMinOffset, _positionMaxOffset)) - position).normalized;
         }
@@ -171,7 +174,7 @@ namespace Asteroids.Scripts.Enemies
 
         private void Reset(Enemy enemy)
         {
-            foreach (var entity in _enemies.ToList())
+            foreach (var entity in _enemies)
             {
                 if (entity == enemy)
                 {
@@ -192,6 +195,7 @@ namespace Asteroids.Scripts.Enemies
             if (_enemyToRemove != null)
             {
                 _enemies.Remove(_enemyToRemove);
+                _enemyToRemove.OnEnded -= Reset;
             }
             
             if (_enemyViewToRemove != null)
@@ -208,8 +212,7 @@ namespace Asteroids.Scripts.Enemies
         private void OnCollisionWithPlayer(ShipMovement shipMovement, Enemy enemy)
         {
             _pushDirection = (enemy.Position - shipMovement.Position).normalized;
-
-            enemy.ChangeMovement(_pushDirection, _dataManager.BouncingTime);
+            enemy.ChangeMovement(_pushDirection, _saveDataRepository.BouncingTime);
         }
     }
 }
