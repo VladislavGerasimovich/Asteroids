@@ -8,7 +8,6 @@ namespace Asteroids.Scripts.Bullets
     public class BulletsSimulation
     {
         private readonly Timers<BulletEntity> _timers = new Timers<BulletEntity>();
-
         private readonly List<BulletEntity> _entities = new List<BulletEntity>();
 
         public event Action<BulletEntity> Start;

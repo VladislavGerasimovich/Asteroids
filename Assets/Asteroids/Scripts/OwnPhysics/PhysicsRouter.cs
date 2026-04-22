@@ -7,9 +7,9 @@ namespace Asteroids.Scripts.OwnPhysics
 {
     public class PhysicsRouter : ITickable
     {
-        private Collisions _collisions = new Collisions();
-
         private readonly Func<IEnumerable<Record>> _recordsProvider;
+        
+        private Collisions _collisions = new Collisions();
 
         public PhysicsRouter(CollisionsRecords collisionsRecords)
         {

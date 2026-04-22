@@ -9,15 +9,15 @@ namespace Asteroids.Scripts.Spawners
 {
     public class PlayerSpawner : MonoBehaviour, IInitializable
     {
-        [SerializeField] private PlayerShipView _playerShipView;
-
-        public PlayerShipView CurrentPlayerShipView { get; private set; }
+        [SerializeField] private PlayerShipView playerShipView;
 
         private PhysicsRouter _physicsRouter;
         private ShipMovement _shipMovement;
         private CollisionsRecords _collisionsRecords;
         private SaveDataRepository _saveDataRepository;
         private Camera _camera;
+        
+        public PlayerShipView CurrentPlayerShipView { get; private set; }
 
         [Inject]
         private void Construct(
@@ -38,7 +38,7 @@ namespace Asteroids.Scripts.Spawners
         {
             GameObject playerContainer = new GameObject("PlayerContainer");
             CurrentPlayerShipView = Instantiate(
-                _playerShipView.gameObject,
+                playerShipView.gameObject,
                 new Vector3(_saveDataRepository.PlayerPosition.x, _saveDataRepository.PlayerPosition.y),
                 Quaternion.identity,
                 playerContainer.transform).GetComponent<PlayerShipView>();

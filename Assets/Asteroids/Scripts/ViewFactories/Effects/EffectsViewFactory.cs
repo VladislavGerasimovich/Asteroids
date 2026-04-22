@@ -6,14 +6,14 @@ namespace Asteroids.Scripts.ViewFactories.Effects
 {
     public class EffectsViewFactory : MonoBehaviour, IInitializable
     {
-        [SerializeField] private EffectView InvulnerabilityEffectView;
+        [SerializeField] private EffectView invulnerabilityEffectView;
         
         private PoolMono<EffectView> _invulnerabilityEffectsPool;
         
         public void Initialize()
         {
             GameObject invulnerabilityEffectContainer = new GameObject("InvulnerabilityEffectContainer");
-            _invulnerabilityEffectsPool = new PoolMono<EffectView>(InvulnerabilityEffectView, 5, invulnerabilityEffectContainer.transform);
+            _invulnerabilityEffectsPool = new PoolMono<EffectView>(invulnerabilityEffectView, 5, invulnerabilityEffectContainer.transform);
             _invulnerabilityEffectsPool.AutoExpand = true;
         }
         

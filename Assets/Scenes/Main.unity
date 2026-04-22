@@ -595,9 +595,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   viewBinding: 1
   view: {fileID: 11500000, guid: da3f78886ad04efea5b12ae8a69235a2, type: 3}
-  viewType: {fileID: 11500000, guid: da3f78886ad04efea5b12ae8a69235a2, type: 3}
-  viewTypeName: Asteroids.Scripts.Spawners.PlayerHealthSpawner, Spawners, Version=0.0.0.0,
-    Culture=neutral, PublicKeyToken=null
+  viewType: {fileID: 11500000, guid: c1bef018d8614ca38ccbb3eb00c37cf1, type: 3}
+  viewTypeName: Asteroids.Scripts.ViewFactories.PlayerHealth.PlayerHealthViewReducer,
+    ViewFactories, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   viewId: 
   viewModelBinding: 1
   viewModel: {fileID: 11500000, guid: baa17a7ed8a14d598416c4c1c31aeb3a, type: 3}
@@ -1949,7 +1949,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b00e5062f274f108a44c4281d6272cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InvulnerabilityEffectView: {fileID: 6243112398872905573, guid: 8031c96b34e4de443b8161685b26d549, type: 3}
+  invulnerabilityEffectView: {fileID: 6243112398872905573, guid: 8031c96b34e4de443b8161685b26d549, type: 3}
 --- !u!4 &982096990
 Transform:
   m_ObjectHideFlags: 0
@@ -2236,7 +2236,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d099c05e31748b5479b4ac8567a1dc53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerShipView: {fileID: 4174480410630963252, guid: 1c1777d1e846b2441816b5e7a0ad5e0e, type: 3}
+  playerShipView: {fileID: 4174480410630963252, guid: 1c1777d1e846b2441816b5e7a0ad5e0e, type: 3}
 --- !u!4 &1080804151
 Transform:
   m_ObjectHideFlags: 0
@@ -2608,9 +2608,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c98e3c1d505a4d0e89346afab585df93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UfoView: {fileID: 1244955658873928193, guid: 3fd7fee56b0a04e419ef05adbb758f19, type: 3}
-  AsteroidView: {fileID: 3937626792344662897, guid: e5ee1cbade614084e8967c782a0b28fd, type: 3}
-  PartOfAsteroidView: {fileID: 3284016594210848826, guid: 87b47892e2c16fa48a1047156d49fa9c, type: 3}
+  ufoView: {fileID: 1244955658873928193, guid: 3fd7fee56b0a04e419ef05adbb758f19, type: 3}
+  asteroidView: {fileID: 3937626792344662897, guid: e5ee1cbade614084e8967c782a0b28fd, type: 3}
+  partOfAsteroidView: {fileID: 3284016594210848826, guid: 87b47892e2c16fa48a1047156d49fa9c, type: 3}
 --- !u!4 &1216472642
 Transform:
   m_ObjectHideFlags: 0

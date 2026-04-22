@@ -10,7 +10,6 @@ namespace Asteroids.Scripts.ObjectPool
         private List<T> _pool;
 
         public IEnumerable<T> Pool => _pool;
-
         public T Prefab { get; }
         public bool AutoExpand { get; set; }
         public Transform Container { get; }

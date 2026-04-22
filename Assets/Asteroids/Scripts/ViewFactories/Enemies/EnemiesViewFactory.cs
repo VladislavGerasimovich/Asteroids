@@ -7,9 +7,9 @@ namespace Asteroids.Scripts.ViewFactories.Enemies
 {
     public class EnemiesViewFactory : MonoBehaviour, IInitializable
     {
-        [SerializeField] private EnemyView UfoView;
-        [SerializeField] private EnemyView AsteroidView;
-        [SerializeField] private EnemyView PartOfAsteroidView;
+        [SerializeField] private EnemyView ufoView;
+        [SerializeField] private EnemyView asteroidView;
+        [SerializeField] private EnemyView partOfAsteroidView;
         
         private PoolMono<EnemyView> _ufoPool;
         private PoolMono<EnemyView> _asteroidPool;
@@ -18,14 +18,14 @@ namespace Asteroids.Scripts.ViewFactories.Enemies
         public void Initialize()
         {
             GameObject nloContainer = new GameObject("NloContainer");
-            _ufoPool = new PoolMono<EnemyView>(UfoView, 50, nloContainer.transform);
+            _ufoPool = new PoolMono<EnemyView>(ufoView, 50, nloContainer.transform);
             _ufoPool.AutoExpand = true;
             
             GameObject asteroidContainer = new GameObject("AsteroidContainer");
-            _asteroidPool = new PoolMono<EnemyView>(AsteroidView, 50, asteroidContainer.transform);
+            _asteroidPool = new PoolMono<EnemyView>(asteroidView, 50, asteroidContainer.transform);
             
             GameObject partOfAsteroidContainer = new GameObject("PartOfAsteroidContainer");
-            _partOfAsteroidPool = new PoolMono<EnemyView>(PartOfAsteroidView, 200, partOfAsteroidContainer.transform);
+            _partOfAsteroidPool = new PoolMono<EnemyView>(partOfAsteroidView, 200, partOfAsteroidContainer.transform);
             _partOfAsteroidPool.AutoExpand = true;
         }
         

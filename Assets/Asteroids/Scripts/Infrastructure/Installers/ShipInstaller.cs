@@ -27,7 +27,9 @@ namespace Asteroids.Scripts.Infrastructure
             Container.Bind<ShipMovement>().AsSingle();
             Container.Bind<InertMovement>().AsSingle();
             Container.Bind<InputFactory>().AsSingle();
+            Container.Bind<PlayerHealthViewReducer>().AsSingle();
             Container.Bind<MobileInputView>().FromInstance(mobileInputView).AsSingle();
+            Container.Bind<PlayerHealthView>().FromInstance(playerHealthView).AsSingle();
             Container.BindInterfacesTo<PlayerShipEffectsHandler>().AsSingle();
             Container.BindInterfacesTo<ShipInputRouter>().AsSingle();
             Container.BindInterfacesTo<BulletPresentationService>().AsSingle();
@@ -43,7 +45,6 @@ namespace Asteroids.Scripts.Infrastructure
             Container.BindInterfacesAndSelfTo<BulletsViewFactory>().FromInstance(bulletsViewFactory).AsSingle();
             Container.BindInterfacesAndSelfTo<PlayerHealth>().AsSingle();
             Container.BindInterfacesAndSelfTo<PlayerHealthSpawner>().AsSingle();
-            Container.Bind<PlayerHealthView>().FromInstance(playerHealthView).AsSingle();
         }
     }
 }

@@ -1,17 +1,13 @@
 using Asteroids.Scripts.PlayerShip;
-using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Asteroids.Scripts.Enemies
 {
     public class Ufo : Enemy
     {
+        private UfoBounceHandler _ufoBounceHandler;
         private TransformData _player;
         private Vector2 _direction;
-        private bool _hasBounced;
-        private float _speedMultiplier;
-        private float _bounceMultiplier;
-        private float _normalMultiplier;
         
         public Ufo(Vector2 position, float rotation, float speed, TransformData player)
         {
@@ -19,42 +15,24 @@ namespace Asteroids.Scripts.Enemies
             Rotation = rotation;
             _player = player;
             Speed = speed;
-            _normalMultiplier = 1f;
-            _speedMultiplier = _normalMultiplier;
-            _bounceMultiplier = 2f;
             Type = EnemyType.Ufo;
+            _ufoBounceHandler = new UfoBounceHandler();
         }
 
         public override void Update(float deltaTime)
         {
-            if (!_hasBounced)
+            if (!_ufoBounceHandler.HasBounced)
             {
                 _direction = (_player.Position - Position).normalized;
             }
             
-            Position += _direction * deltaTime * Speed * _speedMultiplier;
+            Position += _direction * deltaTime * Speed * _ufoBounceHandler.SpeedMultiplier;
         }
         
         public override void ChangeMovement(Vector2 direction, float time)
         {
             _direction = direction;
-            ChangeSpeed(time);
-        }
-
-        private async void ChangeSpeed(float time)
-        {
-            _hasBounced = true;
-            _speedMultiplier = _bounceMultiplier;
-            
-            while (time > 0)
-            {
-                time -= Time.deltaTime;
-                _speedMultiplier -= Time.deltaTime;
-                await UniTask.Yield(PlayerLoopTiming.Update);
-            }
-            
-            _speedMultiplier = _normalMultiplier;
-            _hasBounced = false;
+            _ufoBounceHandler.Perform(time);
         }
     }
 }

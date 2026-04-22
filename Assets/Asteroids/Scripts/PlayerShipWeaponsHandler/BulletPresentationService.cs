@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Asteroids.Scripts.Bullets;
 using Asteroids.Scripts.OwnPhysics;
 using Asteroids.Scripts.PlayerShipMovement;
+using Asteroids.Scripts.Utils;
 using Asteroids.Scripts.ViewFactories.Bullets;
 using UnityEngine;
 using Zenject;
@@ -21,6 +22,7 @@ namespace Asteroids.Scripts.PlayerShipWeaponsHandler
         private WeaponsSystem _weaponsSystem;
         private ShipMovement _shipMovement;
         private Camera _camera;
+        private PositionUtils _positionUtils;
 
         public BulletPresentationService(
             ShipMovement shipMovement,
@@ -28,8 +30,10 @@ namespace Asteroids.Scripts.PlayerShipWeaponsHandler
             PhysicsRouter physicsRouter,
             CollisionsRecords collisionsRecords,
             WeaponsSystem weaponsSystem,
-            Camera camera)
+            Camera camera,
+            PositionUtils positionUtils)
         {
+            _positionUtils = positionUtils;
             _camera = camera;
             _weaponsSystem = weaponsSystem;
             _collisionsRecords = collisionsRecords;
@@ -70,6 +74,8 @@ namespace Asteroids.Scripts.PlayerShipWeaponsHandler
             PhysicsEventsBroadcaster physicsEventsBroadcaster = bulletView.GetComponent<PhysicsEventsBroadcaster>();
             physicsEventsBroadcaster.Init(_physicsRouter, bulletEntity.Entity);
             
+            bulletView.transform.position =
+                _camera.ViewportToWorldPoint(_positionUtils.GetRandomPositionInsideUnitCircle());
             bulletView.gameObject.SetActive(true);
             
             _views.Add(bulletEntity, bulletView);
