@@ -1,39 +1,47 @@
 using System;
+using System.Threading;
 using Asteroids.Scripts.OwnPhysics;
 using Asteroids.Scripts.SaveSystem;
 using Cysharp.Threading.Tasks;
 using Zenject;
 
-namespace Asteroids.Scripts.PlayerShip
+namespace Asteroids.Scripts.InputSystem
 {
     public class InputBlocker : IInitializable, IDisposable
     {
         private CollisionsRecords _collisionsRecords;
-        private DataManager _dataManager;
+        private SaveDataRepository _saveDataRepository;
+        private CancellationTokenSource _cts;
 
         public bool IsInputEnabled { get; private set; }
 
-        private InputBlocker(CollisionsRecords collisionsRecords, DataManager dataManager)
+        private InputBlocker(CollisionsRecords collisionsRecords, SaveDataRepository saveDataRepository)
         {
-            _dataManager = dataManager;
+            _saveDataRepository = saveDataRepository;
             _collisionsRecords = collisionsRecords;
+            _cts = new CancellationTokenSource();
         }
         
         public void Initialize()
         {
-            _collisionsRecords.OnPlayerCollideWithEnemy += BlockInput;
+            _collisionsRecords.OnPlayerCollideWithEnemy += OnPlayerEnemyCollision;
             IsInputEnabled = true;
         }
         
         public void Dispose()
         {
-            _collisionsRecords.OnPlayerCollideWithEnemy -= BlockInput;
+            _collisionsRecords.OnPlayerCollideWithEnemy -= OnPlayerEnemyCollision;
         }
         
-        private async void BlockInput()
+        private void OnPlayerEnemyCollision()
+        {
+            BlockInput();
+        }
+        
+        private async UniTask BlockInput()
         {
             IsInputEnabled = false;
-            await UniTask.WaitForSeconds(_dataManager.BouncingTime);
+            await UniTask.WaitForSeconds(_saveDataRepository.BouncingTime, false, PlayerLoopTiming.FixedUpdate, _cts.Token);
             IsInputEnabled = true;
         }
     }

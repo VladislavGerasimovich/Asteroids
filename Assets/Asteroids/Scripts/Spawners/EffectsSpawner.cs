@@ -4,11 +4,12 @@ using UnityEngine;
 using Asteroids.Scripts.Timers;
 using Zenject;
 
-namespace Asteroids.Scripts.Enemies
+namespace Asteroids.Scripts.Spawners
 {
     public class EffectsSpawner : ITickable
     {
         private readonly Timers<EffectView> _timers = new Timers<EffectView>();
+        
         private EffectsViewFactory _effectsViewFactory;
         private Camera _camera;
 

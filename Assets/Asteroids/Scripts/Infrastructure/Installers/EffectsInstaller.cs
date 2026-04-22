@@ -1,4 +1,4 @@
-using Asteroids.Scripts.Enemies;
+using Asteroids.Scripts.Spawners;
 using Asteroids.Scripts.ViewFactories.Effects;
 using UnityEngine;
 using Zenject;

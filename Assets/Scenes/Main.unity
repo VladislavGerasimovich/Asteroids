@@ -279,7 +279,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e19d49fbddf4661b481fe4a2af22d5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dragThreshold: 0.6
   dragMovementDistance: 48
   dragOffsetDistance: 100
 --- !u!1 &87702451
@@ -299,6 +298,7 @@ GameObject:
   - component: {fileID: 87702458}
   - component: {fileID: 87702459}
   - component: {fileID: 87702460}
+  - component: {fileID: 87702461}
   m_Layer: 0
   m_Name: '[Systems]'
   m_TagString: Untagged
@@ -327,6 +327,7 @@ MonoBehaviour:
   - {fileID: 87702458}
   - {fileID: 87702459}
   - {fileID: 87702460}
+  - {fileID: 87702461}
   _installerPrefabs: []
   _autoRun: 1
   OnPreInstall:
@@ -450,6 +451,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 672fa694900d4ddf9b8fb411c132aa3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &87702461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 87702451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0234d47e9aef4daf8d3dbbd462e4b45a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &139693953
 GameObject:
   m_ObjectHideFlags: 0
@@ -500,12 +513,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -582,11 +595,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   viewBinding: 1
   view: {fileID: 11500000, guid: da3f78886ad04efea5b12ae8a69235a2, type: 3}
-  viewType: {fileID: 11500000, guid: da3f78886ad04efea5b12ae8a69235a2, type: 3}
+  viewType: {fileID: 11500000, guid: c1bef018d8614ca38ccbb3eb00c37cf1, type: 3}
+  viewTypeName: Asteroids.Scripts.ViewFactories.PlayerHealth.PlayerHealthViewReducer,
+    ViewFactories, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   viewId: 
   viewModelBinding: 1
   viewModel: {fileID: 11500000, guid: baa17a7ed8a14d598416c4c1c31aeb3a, type: 3}
   viewModelType: {fileID: 11500000, guid: baa17a7ed8a14d598416c4c1c31aeb3a, type: 3}
+  viewModelTypeName: Asteroids.Scripts.ViewModels.PlayerHealthViewModel, ViewModels,
+    Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   viewModelId: 
 --- !u!1 &286628478
 GameObject:
@@ -1160,10 +1177,13 @@ MonoBehaviour:
   viewBinding: 0
   view: {fileID: 761753031}
   viewType: {fileID: 0}
+  viewTypeName: 
   viewId: 
   viewModelBinding: 1
   viewModel: {fileID: 11500000, guid: a3156207663349998ec9f670add9b551, type: 3}
   viewModelType: {fileID: 11500000, guid: b0c084d8d95b445d9a85d42d2701a521, type: 3}
+  viewModelTypeName: Asteroids.Scripts.ViewModels.InertMovementViewModel, ViewModels,
+    Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   viewModelId: 
 --- !u!114 &761753029
 MonoBehaviour:
@@ -1329,10 +1349,13 @@ MonoBehaviour:
   viewBinding: 0
   view: {fileID: 848328371}
   viewType: {fileID: 0}
+  viewTypeName: 
   viewId: 
   viewModelBinding: 1
   viewModel: {fileID: 11500000, guid: a3156207663349998ec9f670add9b551, type: 3}
   viewModelType: {fileID: 11500000, guid: 89f5fc441441450d9ff1f38316676c0c, type: 3}
+  viewModelTypeName: Asteroids.Scripts.ViewModels.LaserGunRollbackViewModel, ViewModels,
+    Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   viewModelId: 
 --- !u!114 &848328369
 MonoBehaviour:
@@ -1779,10 +1802,13 @@ MonoBehaviour:
   viewBinding: 0
   view: {fileID: 918010769}
   viewType: {fileID: 0}
+  viewTypeName: 
   viewId: 
   viewModelBinding: 1
   viewModel: {fileID: 11500000, guid: a3156207663349998ec9f670add9b551, type: 3}
   viewModelType: {fileID: 11500000, guid: a394bbb4e07346edb4d079e25865f864, type: 3}
+  viewModelTypeName: Asteroids.Scripts.ViewModels.LaserGunViewModel, ViewModels,
+    Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   viewModelId: 
 --- !u!114 &918010767
 MonoBehaviour:
@@ -1923,7 +1949,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b00e5062f274f108a44c4281d6272cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InvulnerabilityEffectView: {fileID: 6243112398872905573, guid: 8031c96b34e4de443b8161685b26d549, type: 3}
+  invulnerabilityEffectView: {fileID: 6243112398872905573, guid: 8031c96b34e4de443b8161685b26d549, type: 3}
 --- !u!4 &982096990
 Transform:
   m_ObjectHideFlags: 0
@@ -1990,12 +2016,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -2074,10 +2100,13 @@ MonoBehaviour:
   viewBinding: 0
   view: {fileID: 1044667667}
   viewType: {fileID: 0}
+  viewTypeName: 
   viewId: 
   viewModelBinding: 1
   viewModel: {fileID: 11500000, guid: a0fac6eece3740da80a44341750309e9, type: 3}
   viewModelType: {fileID: 11500000, guid: a0fac6eece3740da80a44341750309e9, type: 3}
+  viewModelTypeName: Asteroids.Scripts.GameLoop.GameLoopHandler, GameLoop, Version=0.0.0.0,
+    Culture=neutral, PublicKeyToken=null
   viewModelId: 
 --- !u!114 &1044667669
 MonoBehaviour:
@@ -2094,10 +2123,13 @@ MonoBehaviour:
   viewBinding: 0
   view: {fileID: 1044667667}
   viewType: {fileID: 0}
+  viewTypeName: 
   viewId: 
   viewModelBinding: 1
   viewModel: {fileID: 0}
   viewModelType: {fileID: 11500000, guid: df21def49c3648c0b60ef4448f2ecf07, type: 3}
+  viewModelTypeName: Asteroids.Scripts.ViewModels.RewardViewModel, ViewModels, Version=0.0.0.0,
+    Culture=neutral, PublicKeyToken=null
   viewModelId: 
 --- !u!1 &1069472569
 GameObject:
@@ -2204,7 +2236,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d099c05e31748b5479b4ac8567a1dc53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerShipView: {fileID: 4174480410630963252, guid: 1c1777d1e846b2441816b5e7a0ad5e0e, type: 3}
+  playerShipView: {fileID: 4174480410630963252, guid: 1c1777d1e846b2441816b5e7a0ad5e0e, type: 3}
 --- !u!4 &1080804151
 Transform:
   m_ObjectHideFlags: 0
@@ -2576,9 +2608,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c98e3c1d505a4d0e89346afab585df93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NloView: {fileID: 1244955658873928193, guid: 3fd7fee56b0a04e419ef05adbb758f19, type: 3}
-  AsteroidView: {fileID: 3937626792344662897, guid: e5ee1cbade614084e8967c782a0b28fd, type: 3}
-  PartOfAsteroidView: {fileID: 3284016594210848826, guid: 87b47892e2c16fa48a1047156d49fa9c, type: 3}
+  ufoView: {fileID: 1244955658873928193, guid: 3fd7fee56b0a04e419ef05adbb758f19, type: 3}
+  asteroidView: {fileID: 3937626792344662897, guid: e5ee1cbade614084e8967c782a0b28fd, type: 3}
+  partOfAsteroidView: {fileID: 3284016594210848826, guid: 87b47892e2c16fa48a1047156d49fa9c, type: 3}
 --- !u!4 &1216472642
 Transform:
   m_ObjectHideFlags: 0
@@ -2781,10 +2813,13 @@ MonoBehaviour:
   viewBinding: 0
   view: {fileID: 1451071045}
   viewType: {fileID: 0}
+  viewTypeName: 
   viewId: 
   viewModelBinding: 1
   viewModel: {fileID: 11500000, guid: a3156207663349998ec9f670add9b551, type: 3}
   viewModelType: {fileID: 11500000, guid: 1f71cc48d2954020a03342a3152d0e6c, type: 3}
+  viewModelTypeName: Asteroids.Scripts.ViewModels.ShipViewModel, ViewModels, Version=0.0.0.0,
+    Culture=neutral, PublicKeyToken=null
   viewModelId: 
 --- !u!114 &1451071043
 MonoBehaviour:
@@ -3060,10 +3095,13 @@ MonoBehaviour:
   viewBinding: 0
   view: {fileID: 1540963281}
   viewType: {fileID: 0}
+  viewTypeName: 
   viewId: 
   viewModelBinding: 1
   viewModel: {fileID: 11500000, guid: a3156207663349998ec9f670add9b551, type: 3}
   viewModelType: {fileID: 11500000, guid: 1f71cc48d2954020a03342a3152d0e6c, type: 3}
+  viewModelTypeName: Asteroids.Scripts.ViewModels.ShipViewModel, ViewModels, Version=0.0.0.0,
+    Culture=neutral, PublicKeyToken=null
   viewModelId: 
 --- !u!1 &1692177604
 GameObject:
@@ -3226,7 +3264,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 195, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1715429582

@@ -1,7 +1,7 @@
 using System;
-using Asteroids.Scripts.Enemies;
 using Asteroids.Scripts.OwnPhysics;
-using Asteroids.Scripts.PlayerShip;
+using Asteroids.Scripts.PlayerShipMovement;
+using Asteroids.Scripts.Spawners;
 using Asteroids.Scripts.ViewFactories.Effects;
 using Zenject;
 

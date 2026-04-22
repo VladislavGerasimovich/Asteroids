@@ -12,11 +12,6 @@ namespace Asteroids.Scripts.ViewFactories.Bullets
         private float _angle;
         private Vector2 _positionOffset;
 
-        public void OnEnable()
-        {
-            _mainCamera = Camera.main;
-        }
-
         private void Awake()
         {
             _positionOffset = new Vector2(0.5f, 0.5f);
@@ -27,9 +22,10 @@ namespace Asteroids.Scripts.ViewFactories.Bullets
             ResetPosition();
         }
 
-        public void Init(Trajectory trajectory)
+        public void Init(Trajectory trajectory, Camera camera)
         {
             _trajectory = trajectory;
+            _mainCamera = camera;
         }
 
         public void Update()

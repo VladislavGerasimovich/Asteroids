@@ -1,9 +1,12 @@
-using Asteroids.Scripts.SaveSystem;
+using Asteroids.Scripts.CollisionsHandler;
+using Asteroids.Scripts.PlayerShipMovement;
+using Asteroids.Scripts.PlayerShipWeaponsHandler;
+using Asteroids.Scripts.Spawners;
 using Asteroids.Scripts.ViewModels;
 using UnityEngine;
 using Zenject;
 
-namespace Asteroids.Scripts.PlayerShip
+namespace Asteroids.Scripts.InputSystem
 {
     public class ShipInputRouter : ITickable
     {
@@ -11,7 +14,7 @@ namespace Asteroids.Scripts.PlayerShip
         private PlayerSpawner _playerSpawner;
         private InertMovement _inertMovement;
         private IInputService _inputService;
-        private ShipWeaponsHandler _shipWeaponsHandler;
+        private WeaponsSystem _weaponsSystem;
         private InputBlocker _inputBlocker;
         private PostCollisionMovement _postCollisionMovement;
         private InertMovementViewModel _inertMovementViewModel;
@@ -19,21 +22,21 @@ namespace Asteroids.Scripts.PlayerShip
         public ShipInputRouter(
             PlayerSpawner playerSpawner,
             ShipMovement shipMovement,
-            ShipWeaponsHandler shipWeaponsHandler,
+            WeaponsSystem weaponsSystem,
             MobileInputView mobileInputView,
             InputBlocker inputBlocker,
             PostCollisionMovement postCollisionMovement,
+            InputFactory inputFactory,
             InertMovementViewModel inertMovementViewModel,
-            DataManager dataManager)
+            InertMovement inertMovement)
         {
             _inertMovementViewModel = inertMovementViewModel;
             _playerSpawner = playerSpawner;
             _shipMovement = shipMovement;
-            _shipWeaponsHandler = shipWeaponsHandler;
+            _weaponsSystem = weaponsSystem;
             _inputBlocker = inputBlocker;
             _postCollisionMovement = postCollisionMovement;
-            _inertMovement = new InertMovement(dataManager);
-
+            _inertMovement = inertMovement;
             _inertMovementViewModel.Init(_inertMovement);
             
             if (Application.isEditor)
@@ -46,20 +49,20 @@ namespace Asteroids.Scripts.PlayerShip
                     if (!string.IsNullOrEmpty(joysticks[i]))
                     {
                         hasGamepad = true;
-                        _inputService = new GamepadInputService();
+                        _inputService = inputFactory.GetGamepadInputService();
                     }
                 }
 
                 if (hasGamepad == false)
                 {
-                    _inputService = new StandaloneInputService();
+                    _inputService = inputFactory.GetStandaloneInputService();
                 }
 
                 mobileInputView.Hide();
             }
             else
             {
-                _inputService = new MobileJoystickInputService(mobileInputView);
+                _inputService = inputFactory.GetMobileJoystickInputService(mobileInputView);
                 mobileInputView.Show();
             }
         }
@@ -92,11 +95,11 @@ namespace Asteroids.Scripts.PlayerShip
             {
                 if (_inputService.IsFirstGunSlotButtonDown())
                 {
-                    _shipWeaponsHandler.OnFirstSlotGunButtonClicked();
+                    _weaponsSystem.OnFirstSlotGunButtonClicked();
                 }
                 else if (_inputService.IsSecondGunSlotButtonDown())
                 {
-                    _shipWeaponsHandler.OnSecondSlotGunButtonClicked();
+                    _weaponsSystem.OnSecondSlotGunButtonClicked();
                 }
             }
 

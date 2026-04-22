@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Asteroids.Scripts.ViewFactories.Player
+namespace Asteroids.Scripts.ViewFactories.PlayerShip
 {
     public class PlayerShipView : MonoBehaviour
     {
@@ -11,8 +11,12 @@ namespace Asteroids.Scripts.ViewFactories.Player
 
         private void Awake()
         {
-            _mainCamera = Camera.main;
             Collider = GetComponent<BoxCollider2D>();
+        }
+
+        public void Init(Camera camera)
+        {
+            _mainCamera = camera;
         }
 
         public void Move(Vector2 position, float rotation)

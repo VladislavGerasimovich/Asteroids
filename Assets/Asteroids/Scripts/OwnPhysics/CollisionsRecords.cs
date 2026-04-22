@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Asteroids.Scripts.Bullets;
 using Asteroids.Scripts.Enemies;
-using Asteroids.Scripts.PlayerShip;
+using Asteroids.Scripts.PlayerShipMovement;
 
 namespace Asteroids.Scripts.OwnPhysics
 {

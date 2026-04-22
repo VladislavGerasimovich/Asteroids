@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Asteroids.Scripts.PlayerShip
+namespace Asteroids.Scripts.InputSystem
 {
     public class MobileInputView : MonoBehaviour
     {

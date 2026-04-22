@@ -1,6 +1,4 @@
 using System;
-using Asteroids.Scripts.FirebaseIntegration;
-using Asteroids.Scripts.RewardSystem;
 using Asteroids.Scripts.Signals;
 using MVVM;
 using UniRx;
@@ -15,19 +13,9 @@ namespace Asteroids.Scripts.GameLoop
         public ReactiveProperty<bool> IsPlayerDied;
         
         private SignalBus _signalBus;
-        private YandexSDK _yandexSDK;
-        private RewardHandler _rewardHandler;
-        private FirebaseAnalyticsSetter _firebaseAnalyticsSetter;
 
-        public GameLoopHandler(
-            SignalBus signalBus,
-            YandexSDK yandexSDK,
-            RewardHandler rewardHandler,
-            FirebaseAnalyticsSetter firebaseAnalyticsSetter)
+        public GameLoopHandler(SignalBus signalBus)
         {
-            _firebaseAnalyticsSetter = firebaseAnalyticsSetter;
-            _rewardHandler = rewardHandler;
-            _yandexSDK = yandexSDK;
             _signalBus = signalBus;
             IsPlayerDied = new ReactiveProperty<bool>();
         }
@@ -44,8 +32,6 @@ namespace Asteroids.Scripts.GameLoop
 
         private void OnPlayerDied()
         {
-            _firebaseAnalyticsSetter.Set(_rewardHandler.RewardCount);
-            _yandexSDK.ShowInterstitalAd();
             IsPlayerDied.Value = true;
         }
 

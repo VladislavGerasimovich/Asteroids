@@ -6,17 +6,16 @@ namespace Asteroids.Scripts.ResolutionHandler
 {
     public class ScreenResolutionHandler : IInitializable
     {
-        private DataManager _dataManager;
+        private SaveDataRepository _saveDataRepository;
 
-        public ScreenResolutionHandler(DataManager dataManager)
+        public ScreenResolutionHandler(SaveDataRepository saveDataRepository)
         {
-            _dataManager = dataManager;
-            _dataManager.LoadProgressOrInitNew();
+            _saveDataRepository = saveDataRepository;
         }
         
         public void Initialize()
         {
-            Screen.SetResolution(_dataManager.ScreenWidth, _dataManager.ScreenHeight, _dataManager.IsFullScreen);
+            Screen.SetResolution(_saveDataRepository.ScreenWidth, _saveDataRepository.ScreenHeight, _saveDataRepository.IsFullScreen);
         }
     }
 }

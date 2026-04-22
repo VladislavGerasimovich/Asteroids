@@ -7,7 +7,10 @@ namespace Asteroids.Scripts.Infrastructure
     {
         public override void InstallBindings()
         {
-            Container.BindInterfacesAndSelfTo<DataManager>().AsSingle();
+            Container.Bind<GameBalanceConfig>().AsSingle();
+            Container.Bind<SaveDataRepository>().AsSingle();
+            Container.Bind<SaveBootstrapper>().AsSingle();
+            Container.BindInterfacesTo<DebugSaveResetService>().AsSingle();
         }
     }
 }
