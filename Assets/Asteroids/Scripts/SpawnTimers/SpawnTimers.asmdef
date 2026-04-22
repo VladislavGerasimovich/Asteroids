@@ -1,0 +1,16 @@
+{
+    "name": "SpawnTimers",
+    "rootNamespace": "",
+    "references": [
+        "GUID:56345db4bf7c481c8434cb078ba7045b"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
