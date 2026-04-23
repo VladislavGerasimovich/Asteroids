@@ -15,6 +15,7 @@ namespace Asteroids.Scripts.Enemies
             Rotation = rotation;
             _player = player;
             Speed = speed;
+            
             Type = EnemyType.Ufo;
             _ufoBounceHandler = new UfoBounceHandler();
         }
@@ -27,6 +28,11 @@ namespace Asteroids.Scripts.Enemies
             }
             
             Position += _direction * deltaTime * Speed * _ufoBounceHandler.SpeedMultiplier;
+        }
+
+        public override void Dispose()
+        {
+            _ufoBounceHandler.Dispose();
         }
         
         public override void ChangeMovement(Vector2 direction, float time)

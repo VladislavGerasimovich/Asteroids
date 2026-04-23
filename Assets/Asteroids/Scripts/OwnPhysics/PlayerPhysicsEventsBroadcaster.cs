@@ -1,4 +1,3 @@
-using System.Threading;
 using Asteroids.Scripts.SaveSystem;
 using Cysharp.Threading.Tasks;
 
@@ -8,7 +7,6 @@ namespace Asteroids.Scripts.OwnPhysics
     {
         private CollisionsRecords _collisionsRecords;
         private SaveDataRepository _saveDataRepository;
-        private CancellationTokenSource _cts;
         
         public void Init(
             PhysicsRouter router,
@@ -22,7 +20,6 @@ namespace Asteroids.Scripts.OwnPhysics
             _collisionsRecords = collisionsRecords;
             _collisionsRecords.OnPlayerCollideWithEnemy += OnPlayerEnemyCollision;
             CanHandleCollisions = true;
-            _cts = new CancellationTokenSource();
         }
 
         private void OnDisable()
@@ -41,7 +38,7 @@ namespace Asteroids.Scripts.OwnPhysics
         private async UniTask DisableCollisions()
         {
             CanHandleCollisions = false;
-            await UniTask.WaitForSeconds(_saveDataRepository.BouncingTime, false, PlayerLoopTiming.FixedUpdate, _cts.Token);
+            await UniTask.WaitForSeconds(_saveDataRepository.BouncingTime, false, PlayerLoopTiming.FixedUpdate, this.GetCancellationTokenOnDestroy());
             CanHandleCollisions = true;
         }
     }

@@ -34,7 +34,7 @@ namespace Asteroids.Scripts.ViewFactories.PlayerHealth
 
             while (_accumulatedTime <= fillTime)
             {
-                await UniTask.Yield(PlayerLoopTiming.Update);
+                await UniTask.Yield(PlayerLoopTiming.Update, this.GetCancellationTokenOnDestroy());
                 _accumulatedTime += Time.deltaTime;
                 icon.fillAmount = _accumulatedTime / fillTime;
             }
@@ -48,7 +48,7 @@ namespace Asteroids.Scripts.ViewFactories.PlayerHealth
 
             while (_accumulatedTime >= 0)
             {
-                await UniTask.Yield(PlayerLoopTiming.Update);
+                await UniTask.Yield(PlayerLoopTiming.Update, this.GetCancellationTokenOnDestroy());
                 _accumulatedTime -= Time.deltaTime;
 
                 if (icon != null)

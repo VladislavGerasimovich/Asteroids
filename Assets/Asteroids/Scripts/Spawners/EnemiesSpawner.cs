@@ -82,6 +82,11 @@ namespace Asteroids.Scripts.Spawners
             _collisionsRecords.OnEnemyDied -= Reset;
             _collisionsRecords.OnAsteroidDestroyed -= CreateAsteroidParts;
             _enemySpawnTimer.OnSpawnTimeReached -= CreateRandomEnemy;
+
+            foreach (var enemy in _enemies)
+            {
+                enemy.Dispose();
+            }
         }
 
         private void CreateRandomEnemy()
@@ -144,6 +149,9 @@ namespace Asteroids.Scripts.Spawners
 
         private void Reset(Enemy enemy)
         {
+            _enemyToRemove = null;
+            _enemyViewToRemove = null;
+            
             foreach (var entity in _enemies)
             {
                 if (entity == enemy)
@@ -166,6 +174,7 @@ namespace Asteroids.Scripts.Spawners
             {
                 _enemies.Remove(_enemyToRemove);
                 _enemyToRemove.OnEnded -= Reset;
+                _enemyToRemove.Dispose();
             }
 
             if (_enemyViewToRemove != null)

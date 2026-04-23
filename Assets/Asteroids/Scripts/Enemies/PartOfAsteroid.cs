@@ -35,6 +35,9 @@ namespace Asteroids.Scripts.Enemies
             }
         }
         
+        public override void Dispose()
+        { }
+        
         public override void ChangeMovement(Vector2 direction, float time)
         {
             _direction = direction;

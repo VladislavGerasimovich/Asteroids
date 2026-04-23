@@ -1,3 +1,4 @@
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
@@ -7,6 +8,7 @@ namespace Asteroids.Scripts.Enemies
     {
         private float _bounceMultiplier;
         private float _normalMultiplier;
+        private CancellationTokenSource _cts;
         
         public bool HasBounced { get; private set; }
         public float SpeedMultiplier { get; private set; }
@@ -16,8 +18,14 @@ namespace Asteroids.Scripts.Enemies
             _normalMultiplier = 1f;
             SpeedMultiplier = _normalMultiplier;
             _bounceMultiplier = 2f;
+            _cts = new CancellationTokenSource();
         }
 
+        public void Dispose()
+        {
+            _cts.Cancel();
+        }
+        
         public void Perform(float time)
         {
             ChangeSpeed(time);
@@ -32,7 +40,7 @@ namespace Asteroids.Scripts.Enemies
             {
                 time -= Time.deltaTime;
                 SpeedMultiplier -= Time.deltaTime;
-                await UniTask.Yield(PlayerLoopTiming.Update);
+                await UniTask.Yield(PlayerLoopTiming.Update, _cts.Token);
             }
             
             SpeedMultiplier = _normalMultiplier;
