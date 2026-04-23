@@ -31,6 +31,7 @@ namespace Asteroids.Scripts.InputSystem
         public void Dispose()
         {
             _collisionsRecords.OnPlayerCollideWithEnemy -= OnPlayerEnemyCollision;
+            _cts.Cancel();
         }
         
         private void OnPlayerEnemyCollision()

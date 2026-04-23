@@ -12,6 +12,7 @@ namespace Asteroids.Scripts.Enemies
         public EnemyType Type { get; protected set; }
 
         public abstract void Update(float deltaTime);
+        public abstract void Dispose();
         public abstract void ChangeMovement(Vector2 direction, float time);
     }
 
